@@ -143,11 +143,10 @@ with open('db_populate.sql', 'w') as file:
 		dias = random.randint(1,28)
 		birthdate = f'{ano}-{mes}-{dias}'
 
-		print(ano)
 		if (i == len(medicos) - 1):
-			file.write(f'\t({i}, {birthdate});\n\n')
+			file.write(f'\t({i}, \'{birthdate}\');\n\n')
 
 		else:
-			file.write(f'\t({i}, {especialidade}),\n')
+			file.write(f'\t({i}, \'{birthdate}\'),\n')
 
 		i += 1
