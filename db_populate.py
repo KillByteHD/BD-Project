@@ -151,7 +151,6 @@ with open('db_populate.sql', 'w') as file:
 		else:
 			birthdate = f'{ano}-{mes}-{dias}'
 
-		if mes < 10:
 
 
 		if (i == len(medicos) - 1):
