@@ -52,6 +52,17 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `umclinic`.`zipcode`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `umclinic`.`zipcode` (
+  `zipcode` VARCHAR(10) NOT NULL,
+  `city` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`zipcode`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `umclinic`.`athlete`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `umclinic`.`athlete` (
