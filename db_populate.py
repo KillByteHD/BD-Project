@@ -141,7 +141,18 @@ with open('db_populate.sql', 'w') as file:
 		ano = random.randint(1970,1989)
 		mes = random.randint(1,12)
 		dias = random.randint(1,28)
-		birthdate = f'{ano}-{mes}-{dias}'
+
+		if dias < 10 && mes < 10:
+			birthdate = f'{ano}-0{mes}-0{dias}'
+		elif dias < 10 && mes >= 10:
+			birthdate = f'{ano}-{mes}-0{dias}'
+		elif dias >= 10 && mes < 10:
+			birthdate = f'{ano}-0{mes}-{dias}'
+		else:
+			birthdate = f'{ano}-{mes}-{dias}'
+
+		if mes < 10:
+
 
 		if (i == len(medicos) - 1):
 			file.write(f'\t({i}, \'{birthdate}\');\n\n')
