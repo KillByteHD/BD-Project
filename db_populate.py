@@ -247,3 +247,6 @@ with open('db_populate.sql', 'w') as file:
 			file.write(f'\t({random.randint(0, len(medicos) - 1)}, {random.randint(0, len(atletas_nomes) - 1)}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)}),\n')
 
 		i += 1
+
+
+print("Ficheiro db_populate.sql gerado com sucesso!")
