@@ -94,7 +94,7 @@ print("Modalidades escritas em modalidades.txt!")
 
 i = 0
 
-with open('data_injection_BD.sql', 'w') as file:
+with open('db_populate.sql', 'w') as file:
 	# Clubes
 	file.write("/* Inserir os Clubes na tabela \"club\" */\n")
 	file.write("INSERT INTO club (idClub, name)\nVALUES\n")
@@ -145,9 +145,9 @@ with open('data_injection_BD.sql', 'w') as file:
 
 		print(ano)
 		if (i == len(medicos) - 1):
-			file.write(f'\t({i}, \'{especialidade}\');\n\n')
+			file.write(f'\t({i}, {birthdate});\n\n')
 
 		else:
-			file.write(f'\t({i}, \'{especialidade}\'),\n')
+			file.write(f'\t({i}, {especialidade}),\n')
 
 		i += 1
