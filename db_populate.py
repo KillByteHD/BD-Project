@@ -142,11 +142,11 @@ with open('db_populate.sql', 'w') as file:
 		mes = random.randint(1,12)
 		dias = random.randint(1,28)
 
-		if dias < 10 && mes < 10:
+		if dias < 10 and mes < 10:
 			birthdate = f'{ano}-0{mes}-0{dias}'
-		elif dias < 10 && mes >= 10:
+		elif dias < 10 and mes >= 10:
 			birthdate = f'{ano}-{mes}-0{dias}'
-		elif dias >= 10 && mes < 10:
+		elif dias >= 10 and mes < 10:
 			birthdate = f'{ano}-0{mes}-{dias}'
 		else:
 			birthdate = f'{ano}-{mes}-{dias}'
