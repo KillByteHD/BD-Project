@@ -1,2 +1,2 @@
 # BD-Project
-My Instance of DataBases Project
+My Data Bases project instance
