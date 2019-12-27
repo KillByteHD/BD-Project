@@ -141,7 +141,7 @@ with open('db_populate.sql', 'w') as file:
 		ano = random.randint(1970,1989)
 		mes = random.randint(1,12)
 		dias = random.randint(1,28)
-		birthdate = f'{ano}-{mes}-{dia}'
+		birthdate = f'{ano}-{mes}-{dias}'
 
 		print(ano)
 		if (i == len(medicos) - 1):
