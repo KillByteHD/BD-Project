@@ -6,7 +6,7 @@ import random
 # Dados Iniciais
 random.seed()
 
-moradas = ["Rua dos Lusíadas"]
+moradas = ["Rua dos Lusíadas", "Canada da Quinta", "Rua João Fragata", "Angra do Heroísmo", "Rua do Rei", "Fontinhas", "5 Ribeiras", "Ponta Delgada", "Conceição", "S.Mateus", "Serreta", "S.Brás", "Canada Francesa"]
 medicos = ["Asi Lucas", "Belchior Telles", "Boaventura Quintana", "Clarisse Mantas", "Collin Guterres", "Dora García", "Dorindo Naves", "Dulce Barra", "Fulvio Andrade", "Guiomar Saraíba", "Gávio Estrada", "Higino Tabosa", "Iberê Penteado", "Laurinda Gomes", "Levi Tamoio", "Natália Bento", "Noémia Imbassaí","Paula Alcantara", "Quintilien Lago", "Raul Negromonte"]
 clubes = ["SL Benfica", "FC Porto", "Sporting CP", "Boavista FC", "SC Braga", "Vitória S.C.", "FC Paços de Ferreira","Vitória de Setúbal","CS Marítimo"	,"Belenenses","CD Nacional"	,"G.D. CUF"	,"Académica","UD Leiria","Leixões SC","SC Beira Mar","SC Salgueiros","Portimonense SC","GD Chaves","SC Farense","Rio Ave","Estrela da Amadora","CD Santa Clara","FC Barreirense"]
 modalidades_nomes = []
@@ -135,7 +135,7 @@ with open('db_populate.sql', 'w') as file:
 
 	# Médicos
 	i = 0
-	file.write("/* Inserir so Médicos na tabela \"doctor\" */\n")
+	file.write("/* Inserir os Médicos na tabela \"doctor\" */\n")
 	file.write("INSERT INTO doctor (idDoctor, birthdate, name, address, cellphone, idExpertise)\nVALUES\n")
 	for medico in medicos:
 		ano = random.randint(1970,1989)
@@ -154,9 +154,9 @@ with open('db_populate.sql', 'w') as file:
 
 
 		if (i == len(medicos) - 1):
-			file.write(f'\t({i}, \'{birthdate}\');\n\n')
+			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{moradas[random.randint(0, len(moradas)-1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(0, len(especialidades) - 1)});\n\n')
 
 		else:
-			file.write(f'\t({i}, \'{birthdate}\'),\n')
+			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{moradas[random.randint(0, len(moradas)-1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(0, len(especialidades) - 1)}),\n')
 
 		i += 1
