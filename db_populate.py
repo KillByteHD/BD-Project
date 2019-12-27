@@ -6,7 +6,9 @@ import random
 # Dados Iniciais
 random.seed()
 
-moradas = ["Rua dos Lusíadas", "Canada da Quinta", "Rua João Fragata", "Angra do Heroísmo", "Rua do Rei", "Fontinhas", "5 Ribeiras", "Ponta Delgada", "Conceição", "S.Mateus", "Serreta", "S.Brás", "Canada Francesa"]
+categorias = ["Escolinhas", "Infantis", "Juvenis", "Juniores", "Seniores"]
+cidades = ["Angra do Heroísmo", "Praia da Vitória", "Ponta Delgada", "Lisboa", "Porto", "Funchal", "Coimbra", "Braga", "Faro", "Portimão", "Vila Real", "Alentejo", "Santarém", "Aveiro", "Beja", "Vila do Conde", "Paris", "Angola", "Londres", "Praga", "Bélgica", "Moçambique"]
+zipcodes = [f'{random.randint(1000,9999)}-{random.randint(100,999)}' for i in range (len(cidades))]
 medicos = ["Asi Lucas", "Belchior Telles", "Boaventura Quintana", "Clarisse Mantas", "Collin Guterres", "Dora García", "Dorindo Naves", "Dulce Barra", "Fulvio Andrade", "Guiomar Saraíba", "Gávio Estrada", "Higino Tabosa", "Iberê Penteado", "Laurinda Gomes", "Levi Tamoio", "Natália Bento", "Noémia Imbassaí","Paula Alcantara", "Quintilien Lago", "Raul Negromonte"]
 clubes = ["SL Benfica", "FC Porto", "Sporting CP", "Boavista FC", "SC Braga", "Vitória S.C.", "FC Paços de Ferreira","Vitória de Setúbal","CS Marítimo"	,"Belenenses","CD Nacional"	,"G.D. CUF"	,"Académica","UD Leiria","Leixões SC","SC Beira Mar","SC Salgueiros","Portimonense SC","GD Chaves","SC Farense","Rio Ave","Estrela da Amadora","CD Santa Clara","FC Barreirense"]
 modalidades_nomes = []
@@ -133,6 +135,32 @@ with open('db_populate.sql', 'w') as file:
 
 		i += 1
 
+	# Código Postal
+	i = 0
+	file.write("/* Inserir os Códigos Postais na tabela \"zipcode\" */\n")
+	file.write("INSERT INTO zipcode (zipcode, city)\nVALUES\n")
+	for zipcode in zipcodes:
+		if (i == len(zipcodes) - 1):
+			file.write(f'\t({zipcode}, \'{cidades[random.randint(0, len(zipcodes) - 1)]}\');\n\n')
+
+		else:
+			file.write(f'\t({zipcode}, \'{cidades[random.randint(0, len(zipcodes) - 1)]}\'),\n')
+
+		i += 1
+
+	# Categorias
+	i = 0
+	file.write("/* Inserir as Categorias na tabela \"category\" */\n")
+	file.write("INSERT INTO category (idCategory, name)\nVALUES\n")
+	for categoria in categorias:
+		if (i == len(categorias) - 1):
+			file.write(f'\t({i}, \'{categoria}\');\n\n')
+
+		else:
+			file.write(f'\t({i}, \'{categoria}\'),\n')
+
+		i += 1
+
 	# Médicos
 	i = 0
 	file.write("/* Inserir os Médicos na tabela \"doctor\" */\n")
@@ -154,9 +182,68 @@ with open('db_populate.sql', 'w') as file:
 
 
 		if (i == len(medicos) - 1):
-			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{moradas[random.randint(0, len(moradas)-1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(0, len(especialidades) - 1)});\n\n')
+			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(0, len(especialidades) - 1)});\n\n')
 
 		else:
-			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{moradas[random.randint(0, len(moradas)-1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(0, len(especialidades) - 1)}),\n')
+			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(0, len(especialidades) - 1)}),\n')
+
+		i += 1
+
+	# Atletas
+	i = 0
+	file.write("/* Inserir os Atletas na tabela \"athlete\" */\n")
+	file.write("INSERT INTO doctor (idAthlete, name, birthdate, weight, idModality, idCategory, idClub, address)\nVALUES\n")
+	for nome in atletas_nomes:
+		ano = random.randint(1990,2019)
+		mes = random.randint(1,12)
+		dias = random.randint(1,28)
+
+		if dias < 10 and mes < 10:
+			birthdate = f'{ano}-0{mes}-0{dias}'
+		elif dias < 10 and mes >= 10:
+			birthdate = f'{ano}-{mes}-0{dias}'
+		elif dias >= 10 and mes < 10:
+			birthdate = f'{ano}-0{mes}-{dias}'
+		else:
+			birthdate = f'{ano}-{mes}-{dias}'
+
+		if (i == len(atletas_nomes) - 1):
+			file.write(f'\t({i}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(0, len(modalidades_nomes) - 1)}, {random.randint(0, len(categorias) - 1)}, {random.randint(0, len(clubes) - 1)}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\');\n\n')
+
+		else:
+			file.write(f'\t({i}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(0, len(modalidades_nomes) - 1)}, {random.randint(0, len(categorias) - 1)}, {random.randint(0, len(clubes) - 1)}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\'),\n')
+
+		i += 1
+
+	# Consultas
+	i = 0
+	number = 400
+	file.write("/* Inserir as Consultas na tabela \"appointment\" */\n")
+	file.write("INSERT INTO appointment (idDoctor, idAthlete, observations, price, date, finished)\nVALUES\n")
+	for i in range(number):
+		ano = random.randint(1990,2019)
+		mes = random.randint(1,12)
+		dias = random.randint(1,28)
+		horas = random.randint(10,24)
+		minutos = random.randint(0, 60)
+		segundos = random.randint(0,60)
+
+
+		if dias < 10 and mes < 10:
+			date = f'{ano}-0{mes}-0{dias}'
+		elif dias < 10 and mes >= 10:
+			date = f'{ano}-{mes}-0{dias}'
+		elif dias >= 10 and mes < 10:
+			date = f'{ano}-0{mes}-{dias}'
+		else:
+			date = f'{ano}-{mes}-{dias}'
+
+		datetime = f'{date} {horas}-{minutos if minutos > 9 else "0" + str(minutos)}-{segundos if segundos > 9 else "0" + str(segundos)}'
+
+		if (i == number - 1):
+			file.write(f'\t({random.randint(0, len(medicos) - 1)}, {random.randint(0, len(atletas_nomes) - 1)}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)});\n\n')
+
+		else:
+			file.write(f'\t({random.randint(0, len(medicos) - 1)}, {random.randint(0, len(atletas_nomes) - 1)}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)}),\n')
 
 		i += 1
