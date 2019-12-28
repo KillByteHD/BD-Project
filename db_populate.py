@@ -142,10 +142,10 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 	file.write("INSERT INTO zipcode (zipcode, city)\nVALUES\n")
 	for zipcode in zipcodes:
 		if (i == len(zipcodes)):
-			file.write(f'\t({zipcode}, \'{cidades[random.randint(0, len(zipcodes) - 1)]}\');\n\n')
+			file.write(f'\t(\'{zipcode}\', \'{cidades[random.randint(0, len(zipcodes) - 1)]}\');\n\n')
 
 		else:
-			file.write(f'\t({zipcode}, \'{cidades[random.randint(0, len(zipcodes) - 1)]}\'),\n')
+			file.write(f'\t(\'{zipcode}\', \'{cidades[random.randint(0, len(zipcodes) - 1)]}\'),\n')
 
 		i += 1
 
