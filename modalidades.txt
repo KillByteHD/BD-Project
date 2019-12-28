@@ -1,0 +1,9 @@
+Corrida De Pista
+Corrida Com Obstáculos
+Corrida De Meio Fundo
+Corrida De Fundo
+Corrida De Revezamento
+Maratona
+Salto Em Altura
+Salto Em Distância
+Lançamento
