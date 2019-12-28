@@ -73,10 +73,12 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`athlete` (
   `idModality` INT(11) NOT NULL,
   `idCategory` INT(11) NOT NULL,
   `idClub` INT(11) NOT NULL,
+  `idZipcode` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`idAthlete`),
   INDEX `idModality_idx` (`idModality` ASC) VISIBLE,
   INDEX `idCategory_idx` (`idCategory` ASC) VISIBLE,
   INDEX `idClub_idx` (`idClub` ASC) VISIBLE,
+  INDEX `idZipcode_idx` (`idZipcode` ASC) VISIBLE,
   CONSTRAINT `idCategory`
     FOREIGN KEY (`idCategory`)
     REFERENCES `umclinic`.`category` (`idCategory`),
@@ -86,6 +88,9 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`athlete` (
   CONSTRAINT `idModality`
     FOREIGN KEY (`idModality`)
     REFERENCES `umclinic`.`modality` (`idModality`))
+  CONSTRAINT `idZipcode`
+    FOREIGN KEY (`idZipcode`)
+    REFERENCES `umclinic`.`zipcode` (`idZipcode`),
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -108,14 +113,18 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`doctor` (
   `idDoctor` INT(11) NOT NULL,
   `birthdate` DATE NOT NULL,
   `name` VARCHAR(100) NOT NULL,
-  `address` VARCHAR(100) NOT NULL,
   `cellphone` VARCHAR(12) NOT NULL,
   `idExpertise` INT(11) NOT NULL,
+  `idZipcode` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`idDoctor`),
   INDEX `idExpertise_idx` (`idExpertise` ASC) VISIBLE,
+  INDEX `idZipcode_idx` (`idZipcode` ASC) VISIBLE,
   CONSTRAINT `idExpertise`
     FOREIGN KEY (`idExpertise`)
     REFERENCES `umclinic`.`expertise` (`idExpertise`))
+  CONSTRAINT `idZipcode`
+    FOREIGN KEY (`idZipcode`)
+    REFERENCES `umclinic`.`zipcode` (`idZipcode`))  
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
