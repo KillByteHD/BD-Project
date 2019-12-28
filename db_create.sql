@@ -87,10 +87,12 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`athlete` (
     REFERENCES `umclinic`.`club` (`idClub`),
   CONSTRAINT `idModality`
     FOREIGN KEY (`idModality`)
-    REFERENCES `umclinic`.`modality` (`idModality`))
+    REFERENCES `umclinic`.`modality` (`idModality`),
   CONSTRAINT `idZipcode`
     FOREIGN KEY (`idZipcode`)
-    REFERENCES `umclinic`.`zipcode` (`idZipcode`),
+    REFERENCES `umclinic`.`zipcode` (`zipcode`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -121,10 +123,11 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`doctor` (
   INDEX `idZipcode_idx` (`idZipcode` ASC) VISIBLE,
   CONSTRAINT `idExpertise`
     FOREIGN KEY (`idExpertise`)
-    REFERENCES `umclinic`.`expertise` (`idExpertise`))
-  CONSTRAINT `idZipcode`
+    REFERENCES `umclinic`.`expertise` (`idExpertise`),
     FOREIGN KEY (`idZipcode`)
-    REFERENCES `umclinic`.`zipcode` (`idZipcode`))  
+    REFERENCES `umclinic`.`zipcode` (`zipcode`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
