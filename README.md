@@ -11,6 +11,10 @@ Script that fills database with some pre generated values
 > `db_queries.sql`
 Adds stored functions and procedures  to database
 
+> `atletas.txt` && `modalidades.txt`
+Athletes and modalities in case the python scrapper in db_populate.py stops working.
+
+
 ## Directory Structure
 ```
 .
