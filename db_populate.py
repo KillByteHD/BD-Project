@@ -94,14 +94,14 @@ print("Modalidades escritas em modalidades.txt!")
 
 # Gerar SQL
 
-i = 0
+i = 1
 
 with open('db_populate.sql', 'w') as file:
 	# Clubes
 	file.write("/* Inserir os Clubes na tabela \"club\" */\n")
 	file.write("INSERT INTO club (idClub, name)\nVALUES\n")
 	for clube in clubes:
-		if (i == len(clubes) - 1):
+		if (i == len(clubes)):
 			file.write(f'\t({i}, \'{clube}\');\n')
 
 		else:
@@ -110,11 +110,11 @@ with open('db_populate.sql', 'w') as file:
 		i += 1
 
 	# Modalidades
-	i = 0
+	i = 1
 	file.write("\n/* Inserir as Modalidades na tabela \"modality\" */\n")
 	file.write("INSERT INTO modality (idModality, name)\nVALUES\n")
 	for modalidade in modalidades_nomes:
-		if (i == len(modalidades_nomes) - 1):
+		if (i == len(modalidades_nomes)):
 			file.write(f'\t({i}, \'{modalidade}\');\n\n')
 
 		else:
@@ -123,11 +123,11 @@ with open('db_populate.sql', 'w') as file:
 		i += 1
 
 	# Especialidades 
-	i = 0
+	i = 1
 	file.write("/* Inserir as Especialidades na tabela \"expertise\" */\n")
 	file.write("INSERT INTO expertise (idExpertise, designation)\nVALUES\n")
 	for especialidade in especialidades:
-		if (i == len(especialidades) - 1):
+		if (i == len(especialidades)):
 			file.write(f'\t({i}, \'{especialidade}\');\n\n')
 
 		else:
@@ -136,11 +136,11 @@ with open('db_populate.sql', 'w') as file:
 		i += 1
 
 	# Código Postal
-	i = 0
+	i = 1
 	file.write("/* Inserir os Códigos Postais na tabela \"zipcode\" */\n")
 	file.write("INSERT INTO zipcode (zipcode, city)\nVALUES\n")
 	for zipcode in zipcodes:
-		if (i == len(zipcodes) - 1):
+		if (i == len(zipcodes)):
 			file.write(f'\t({zipcode}, \'{cidades[random.randint(0, len(zipcodes) - 1)]}\');\n\n')
 
 		else:
@@ -149,11 +149,11 @@ with open('db_populate.sql', 'w') as file:
 		i += 1
 
 	# Categorias
-	i = 0
+	i = 1
 	file.write("/* Inserir as Categorias na tabela \"category\" */\n")
 	file.write("INSERT INTO category (idCategory, name)\nVALUES\n")
 	for categoria in categorias:
-		if (i == len(categorias) - 1):
+		if (i == len(categorias)):
 			file.write(f'\t({i}, \'{categoria}\');\n\n')
 
 		else:
@@ -162,7 +162,7 @@ with open('db_populate.sql', 'w') as file:
 		i += 1
 
 	# Médicos
-	i = 0
+	i = 1
 	file.write("/* Inserir os Médicos na tabela \"doctor\" */\n")
 	file.write("INSERT INTO doctor (idDoctor, birthdate, name, idZipcode, cellphone, idExpertise)\nVALUES\n")
 	for medico in medicos:
@@ -181,7 +181,7 @@ with open('db_populate.sql', 'w') as file:
 
 
 
-		if (i == len(medicos) - 1):
+		if (i == len(medicos)):
 			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(0, len(especialidades) - 1)});\n\n')
 
 		else:
@@ -190,7 +190,7 @@ with open('db_populate.sql', 'w') as file:
 		i += 1
 
 	# Atletas
-	i = 0
+	i = 1
 	file.write("/* Inserir os Atletas na tabela \"athlete\" */\n")
 	file.write("INSERT INTO doctor (idAthlete, name, birthdate, weight, idModality, idCategory, idClub, idZipcode)\nVALUES\n")
 	for nome in atletas_nomes:
@@ -207,7 +207,7 @@ with open('db_populate.sql', 'w') as file:
 		else:
 			birthdate = f'{ano}-{mes}-{dias}'
 
-		if (i == len(atletas_nomes) - 1):
+		if (i == len(atletas_nomes)):
 			file.write(f'\t({i}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(0, len(modalidades_nomes) - 1)}, {random.randint(0, len(categorias) - 1)}, {random.randint(0, len(clubes) - 1)}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\');\n\n')
 
 		else:
@@ -216,7 +216,7 @@ with open('db_populate.sql', 'w') as file:
 		i += 1
 
 	# Consultas
-	i = 0
+	i = 1
 	number = 400
 	file.write("/* Inserir as Consultas na tabela \"appointment\" */\n")
 	file.write("INSERT INTO appointment (idDoctor, idAthlete, observations, price, date, finished)\nVALUES\n")
