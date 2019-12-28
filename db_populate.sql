@@ -56,6 +56,61 @@ VALUES
 /* Inserir os Códigos Postais na tabela "zipcode" */
 INSERT INTO zipcode (zipcode, city)
 VALUES
+	('5749-768', 'Praga'),
+    ('4743-561', 'Porto'),
+    ('2032-647', 'Vila Real'),
+    ('4224-452', 'Funchal'),
+    ('1666-936', 'Aveiro'),
+    ('1428-714', 'Aveiro'),
+    ('8534-857', 'Paris'),
+    ('4350-435', 'Aveiro'),
+    ('6917-133', 'Londres'),
+    ('4077-762', 'Vila do Conde'),
+    ('5597-200', 'Moçambique'),
+    ('8669-856', 'Bélgica'),
+    ('5881-970', 'Praga'),
+    ('9704-936', 'Lisboa'),
+    ('5403-526', 'Aveiro'),
+    ('8661-321', 'Ponta Delgada'),
+    ('3310-421', 'Vila do Conde'),
+    ('9846-635', 'Vila do Conde'),
+    ('4379-217', 'Paris'),
+    ('5493-668', 'Angola'),
+    ('6897-871', 'Angola'),
+    ('3745-266', 'Vila Real');
+
+/* Inserir as Categorias na tabela "category" */
+INSERT INTO category (idCategory, name)
+VALUES
+	(1, 'Escolinhas'),
+	(2, 'Infantis'),
+	(3, 'Juvenis'),
+	(4, 'Juniores'),
+	(5, 'Seniores');
+
+/* Inserir os Médicos na tabela "doctor" */
+INSERT INTO doctor (idDoctor, birthdate, name, idZipcode, cellphone, idExpertise)
+VALUES
+	(1, '1977-01-06', 'Asi Lucas', '9846-635', 916650642, 3),
+	(2, '1983-08-10', 'Belchior Telles', '9704-936', 912732846, 5),
+	(3, '1970-01-10', 'Boaventura Quintana', '4743-561', 918208939, 9),
+	(4, '1977-05-03', 'Clarisse Mantas', '5881-970', 917302241, 6),
+	(5, '1975-07-12', 'Collin Guterres', '9704-936', 911783234, 3),
+	(6, '1986-11-20', 'Dora García', '8661-321', 917409174, 5),
+	(7, '1979-08-19', 'Dorindo Naves', '5403-526', 912321072, 6),
+	(8, '1971-03-26', 'Dulce Barra', '1428-714', 918982846, 9),
+	(9, '1974-03-26', 'Fulvio Andrade', '3745-266', 911739797, 7),
+	(10, '1988-08-03', 'Guiomar Saraíba', '8669-856', 911272378, 4),
+	(11, '1984-03-02', 'Gávio Estrada', '5597-200', 917117621, 3),
+	(12, '1970-07-25', 'Higino Tabosa', '3310-421', 918509691, 9),
+	(13, '1985-06-13', 'Iberê Penteado', '8534-857', 917379122, 2),
+	(14, '1978-12-05', 'Laurinda Gomes', '6897-871', 918397081, 8),
+	(15, '1981-12-15', 'Levi Tamoio', '9704-936', 912496450, 3),
+	(16, '1971-01-17', 'Natália Bento', '3745-266', 912542738, 4),
+	(17, '1975-01-03', 'Noémia Imbassaí', '4350-435', 912538513, 10),
+	(18, '1984-06-01', 'Paula Alcantara', '8661-321', 914277328, 8),
+	(19, '1972-06-03', 'Quintilien Lago', '3310-421', 915948351, 3),
+	(20, '1976-10-19', 'Raul Negromonte', '4379-217', 912622480, 1);
 
 /* Inserir os Atletas na tabela "athlete" */
 INSERT INTO athlete (idAthlete, name, birthdate, weight, idModality, idCategory, idClub, idZipcode)
