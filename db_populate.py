@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from pathlib import Path
 import random
+import codecs
 
 # Dados Iniciais
 random.seed()
@@ -96,7 +97,7 @@ print("Modalidades escritas em modalidades.txt!")
 
 i = 1
 
-with open('db_populate.sql', 'w') as file:
+with codecs.open('db_populate.sql', 'w','utf-8') as file:
 	# Clubes
 	file.write("/* Inserir os Clubes na tabela \"club\" */\n")
 	file.write("INSERT INTO club (idClub, name)\nVALUES\n")
