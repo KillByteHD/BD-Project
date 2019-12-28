@@ -182,10 +182,10 @@ with open('db_populate.sql', 'w') as file:
 
 
 		if (i == len(medicos)):
-			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(0, len(especialidades) - 1)});\n\n')
+			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(1, len(especialidades))});\n\n')
 
 		else:
-			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(0, len(especialidades) - 1)}),\n')
+			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(1, len(especialidades))}),\n')
 
 		i += 1
 
@@ -208,10 +208,10 @@ with open('db_populate.sql', 'w') as file:
 			birthdate = f'{ano}-{mes}-{dias}'
 
 		if (i == len(atletas_nomes)):
-			file.write(f'\t({i}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(0, len(modalidades_nomes) - 1)}, {random.randint(0, len(categorias) - 1)}, {random.randint(0, len(clubes) - 1)}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\');\n\n')
+			file.write(f'\t({i}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(1, len(modalidades_nomes))}, {random.randint(1, len(categorias))}, {random.randint(1, len(clubes))}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\');\n\n')
 
 		else:
-			file.write(f'\t({i}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(0, len(modalidades_nomes) - 1)}, {random.randint(0, len(categorias) - 1)}, {random.randint(0, len(clubes) - 1)}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\'),\n')
+			file.write(f'\t({i}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(1, len(modalidades_nomes))}, {random.randint(1, len(categorias))}, {random.randint(1, len(clubes))}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\'),\n')
 
 		i += 1
 
@@ -224,9 +224,9 @@ with open('db_populate.sql', 'w') as file:
 		ano = random.randint(1990,2019)
 		mes = random.randint(1,12)
 		dias = random.randint(1,28)
-		horas = random.randint(10,24)
-		minutos = random.randint(0, 60)
-		segundos = random.randint(0,60)
+		horas = random.randint(10,23)
+		minutos = random.randint(0, 59)
+		segundos = random.randint(0,59)
 
 
 		if dias < 10 and mes < 10:
@@ -238,13 +238,13 @@ with open('db_populate.sql', 'w') as file:
 		else:
 			date = f'{ano}-{mes}-{dias}'
 
-		datetime = f'{date} {horas}-{minutos if minutos > 9 else "0" + str(minutos)}-{segundos if segundos > 9 else "0" + str(segundos)}'
+		datetime = f'{date} {horas}:{minutos if minutos > 9 else "0" + str(minutos)}:{segundos if segundos > 9 else "0" + str(segundos)}'
 
 		if (i == number - 1):
-			file.write(f'\t({random.randint(0, len(medicos) - 1)}, {random.randint(0, len(atletas_nomes) - 1)}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)});\n\n')
+			file.write(f'\t({random.randint(1, len(medicos))}, {random.randint(1, len(atletas_nomes))}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)});\n\n')
 
 		else:
-			file.write(f'\t({random.randint(0, len(medicos) - 1)}, {random.randint(0, len(atletas_nomes) - 1)}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)}),\n')
+			file.write(f'\t({random.randint(1, len(medicos))}, {random.randint(1, len(atletas_nomes))}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)}),\n')
 
 		i += 1
 
