@@ -164,7 +164,7 @@ with open('db_populate.sql', 'w') as file:
 	# Médicos
 	i = 0
 	file.write("/* Inserir os Médicos na tabela \"doctor\" */\n")
-	file.write("INSERT INTO doctor (idDoctor, birthdate, name, address, cellphone, idExpertise)\nVALUES\n")
+	file.write("INSERT INTO doctor (idDoctor, birthdate, name, idZipcode, cellphone, idExpertise)\nVALUES\n")
 	for medico in medicos:
 		ano = random.randint(1970,1989)
 		mes = random.randint(1,12)
@@ -192,7 +192,7 @@ with open('db_populate.sql', 'w') as file:
 	# Atletas
 	i = 0
 	file.write("/* Inserir os Atletas na tabela \"athlete\" */\n")
-	file.write("INSERT INTO doctor (idAthlete, name, birthdate, weight, idModality, idCategory, idClub, address)\nVALUES\n")
+	file.write("INSERT INTO doctor (idAthlete, name, birthdate, weight, idModality, idCategory, idClub, idZipcode)\nVALUES\n")
 	for nome in atletas_nomes:
 		ano = random.randint(1990,2019)
 		mes = random.randint(1,12)
