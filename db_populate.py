@@ -100,7 +100,7 @@ i = 1
 with codecs.open('db_populate.sql', 'w','utf-8') as file:
 	# Clubes
 	file.write("/* Inserir os Clubes na tabela \"club\" */\n")
-	file.write("INSERT INTO club (idClub, name)\nVALUES\n")
+	file.write("INSERT INTO club (idClub, nameClub)\nVALUES\n")
 	for clube in clubes:
 		if (i == len(clubes)):
 			file.write(f'\t({i}, \'{clube}\');\n')
@@ -113,7 +113,7 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 	# Modalidades
 	i = 1
 	file.write("\n/* Inserir as Modalidades na tabela \"modality\" */\n")
-	file.write("INSERT INTO modality (idModality, name)\nVALUES\n")
+	file.write("INSERT INTO modality (idModality, nameModality)\nVALUES\n")
 	for modalidade in modalidades_nomes:
 		if (i == len(modalidades_nomes)):
 			file.write(f'\t({i}, \'{modalidade}\');\n\n')
@@ -152,7 +152,7 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 	# Categorias
 	i = 1
 	file.write("/* Inserir as Categorias na tabela \"category\" */\n")
-	file.write("INSERT INTO category (idCategory, name)\nVALUES\n")
+	file.write("INSERT INTO category (idCategory, nameCategory)\nVALUES\n")
 	for categoria in categorias:
 		if (i == len(categorias)):
 			file.write(f'\t({i}, \'{categoria}\');\n\n')
@@ -165,7 +165,7 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 	# Médicos
 	i = 1
 	file.write("/* Inserir os Médicos na tabela \"doctor\" */\n")
-	file.write("INSERT INTO doctor (idDoctor, birthdate, name, idZipcode, cellphone, idExpertise)\nVALUES\n")
+	file.write("INSERT INTO doctor (idDoctor, birthdate, nameDoctor, idZipcode, cellphone, idExpertise)\nVALUES\n")
 	for medico in medicos:
 		ano = random.randint(1970,1989)
 		mes = random.randint(1,12)
@@ -193,7 +193,7 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 	# Atletas
 	i = 1
 	file.write("/* Inserir os Atletas na tabela \"athlete\" */\n")
-	file.write("INSERT INTO athlete (idAthlete, name, birthdate, weight, idModality, idCategory, idClub, idZipcode)\nVALUES\n")
+	file.write("INSERT INTO athlete (idAthlete, nameAthlete, birthdate, weight, idModality, idCategory, idClub, idZipcode)\nVALUES\n")
 	for nome in atletas_nomes:
 		ano = random.randint(1990,2019)
 		mes = random.randint(1,12)
@@ -220,7 +220,7 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 	i = 1
 	number = 400
 	file.write("/* Inserir as Consultas na tabela \"appointment\" */\n")
-	file.write("INSERT INTO appointment (idDoctor, idAthlete, observations, price, date, finished)\nVALUES\n")
+	file.write("INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)\nVALUES\n")
 	for i in range(number):
 		ano = random.randint(1990,2019)
 		mes = random.randint(1,12)
