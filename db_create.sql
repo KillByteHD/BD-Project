@@ -22,7 +22,7 @@ USE `umclinic` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `umclinic`.`category` (
   `idCategory` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
+  `nameCategory` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`idCategory`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -33,7 +33,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `umclinic`.`club` (
   `idClub` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
+  `nameClub` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`idClub`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
@@ -45,7 +45,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `umclinic`.`modality` (
   `idModality` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
+  `nameModality` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`idModality`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -67,7 +67,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `umclinic`.`athlete` (
   `idAthlete` INT(11) NOT NULL,
-  `name` VARCHAR(100) NOT NULL,
+  `nameAthlete` VARCHAR(100) NOT NULL,
   `birthdate` DATE NOT NULL,
   `weight` DECIMAL(4,1) NULL DEFAULT NULL,
   `idModality` INT(11) NOT NULL,
@@ -114,7 +114,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `umclinic`.`doctor` (
   `idDoctor` INT(11) NOT NULL,
   `birthdate` DATE NOT NULL,
-  `name` VARCHAR(100) NOT NULL,
+  `nameDoctor` VARCHAR(100) NOT NULL,
   `cellphone` VARCHAR(12) NOT NULL,
   `idExpertise` INT(11) NOT NULL,
   `idZipcode` VARCHAR(10) NOT NULL,
@@ -140,9 +140,9 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`appointment` (
   `idAthlete` INT(11) NOT NULL,
   `observations` TEXT NULL DEFAULT NULL,
   `price` DECIMAL(7,2) NOT NULL,
-  `date` DATETIME NOT NULL,
+  `dateAppointment` DATETIME NOT NULL,
   `finished` TINYINT(4) NOT NULL,
-  PRIMARY KEY (`idDoctor`, `idAthlete`, `date`),
+  PRIMARY KEY (`idDoctor`, `idAthlete`, `dateAppointment`),
   INDEX `idAthlete_idx` (`idAthlete` ASC) VISIBLE,
   CONSTRAINT `idAthlete`
     FOREIGN KEY (`idAthlete`)
