@@ -11,7 +11,6 @@ USE umclinic;
 #drop procedure p_finalizarConsulta;
 #drop procedure p_addObservations;
 
-
 #drop procedure p_adicionarConsulta;
 DELIMITER //
 CREATE PROCEDURE p_adicionarConsulta (IN idDoctor INT(11), idAthlete INT(11), obs TEXT, p DECIMAL(7,2), dateAppointment Datetime, f TINYINT(4))
@@ -138,5 +137,163 @@ SET observations = obs
 where idAthlete = idA
 and idDoctor = idD
 and dateAppointment = d;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE p_medicosNaoConsultaAtletasCidade (IN cityAthlete varchar(30))
+BEGIN
+Select distinct d.nameDoctor as Name
+from appointment a  
+inner JOIN doctor d on d.idDoctor = a.idDoctor
+inner join athlete atl on atl.idAthlete = a.idAthlete
+inner join zipcode z on z.zipcode = atl.idZipcode
+where z.city not in (cityAthlete);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE p_atletasSoConsultadosUmaEspecialidade ()
+BEGIN
+Select atl.nameAthlete as Name, e.designation as Expertise
+from appointment a 
+INNER JOIN athlete atl on atl.idAthlete= a.idAthlete
+INNER JOIN doctor d on  d.idDoctor = a.idDoctor
+INNER JOIN expertise e on d.idExpertise = e.idExpertise
+group by a.idAthlete
+having count(*) = 1;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE p_especialidadeComMaisConsultas ()
+BEGIN
+Select e.designation as Name, count(*) as NumberOfAppointments
+from appointment a 
+INNER JOIN doctor d on  d.idDoctor = a.idDoctor
+INNER JOIN expertise e on d.idExpertise = e.idExpertise
+group by (e.idExpertise) 
+order by (count(*)) desc limit 5;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE p_categoriasComMaisConsultas ()
+BEGIN
+Select c.nameCategory as Name, count(*) as NumberOfAppointments
+from appointment a 
+INNER JOIN athlete atl ON a.idAthlete = atl.idAthlete
+INNER JOIN category c ON c.idCategory = atl.idCategory
+group by (c.idCategory) 
+order by (count(*)) desc;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE p_modalidadesComMaisConsultas ()
+BEGIN
+Select m.nameModality as Name, count(*) as NumberOfAppointments
+from appointment a 
+INNER JOIN athlete atl ON a.idAthlete = atl.idAthlete
+INNER JOIN modality m ON m.idModality = atl.idModality
+group by (m.idModality) 
+order by (count(*)) desc limit 5;
+END //
+DELIMITER ;
+
+#ainda falta testar esta
+DELIMITER //
+CREATE PROCEDURE p_clubesComMaisConsultas()
+BEGIN
+Select c.nameClub as Name, count(*) as NumberOfAppointments
+from appointment a 
+INNER JOIN athlete atl ON a.idAthlete = atl.idAthlete
+INNER JOIN club c ON c.idClub = atl.idClub
+group by (c.idClub) 
+order by (count(*)) desc limit 5;
+END //
+DELIMITER ;
+
+#ainda falta testar esta
+DELIMITER //
+CREATE PROCEDURE p_atletasComMaisConsultas ()
+BEGIN
+Select atl.nameAthlete as Name, count(*) as NumberOfAppointments
+from appointment a, athlete atl
+where atl.idAthlete= a.idAthlete
+group by (a.idAthlete) 
+order by (count(*)) desc limit 5;
+END //
+DELIMITER ;
+
+#ainda falta testar esta
+DELIMITER //
+CREATE PROCEDURE p_medicoComMaisConsultas()
+BEGIN
+Select d.nameDoctor as Name, count(*) as NumberOfAppointments
+from appointment a, doctor d
+where d.idDoctor = a.idDoctor
+group by (a.idDoctor) 
+order by (count(*)) desc limit 1;
+END //
+DELIMITER ;
+
+
+#ainda falta testar esta
+DELIMITER //
+CREATE PROCEDURE p_consultasPorMedico()
+BEGIN
+Select d.nameDoctor as Name, count(*) as NumberOfAppointments
+from appointment a, doctor d
+where d.idDoctor = a.idDoctor
+group by (a.idDoctor) 
+order by (count(*)) desc;
+END //
+DELIMITER ;
+
+#ainda falta testar esta
+DELIMITER //
+CREATE PROCEDURE p_mediaPeso()
+BEGIN
+Select avg(a.weight) as "Peso médio" 
+from athlete a;
+END //
+DELIMITER ;
+
+
+#ainda falta testar esta
+DELIMITER //
+CREATE PROCEDURE p_medicosPorEspecialidade ()
+BEGIN
+Select e.designation as Expertise, count(*) as NumberOfDoctors
+from doctor d, expertise e
+where d.idExpertise = e.idExpertise
+group by (e.idExpertise) 
+order by (count(*)) desc;
+END //
+DELIMITER ;
+
+
+#ainda falta testar esta
+DELIMITER //
+CREATE PROCEDURE p_totalFaturado ()
+BEGIN
+Select sum(a.price) as montante
+from appointment a
+where finished = 1;
+END //
+DELIMITER ;
+
+#ainda falta testar esta
+DELIMITER //
+CREATE PROCEDURE p_consultasPassadas ()
+BEGIN
+Select atl.nameAthlete as Athlete, d.nameDoctor as Doctor, a.dateAppointment, a.observations, a.price
+from Appointment a inner join athlete atl on a.idAthlete = atl.idAthlete
+inner join doctor d on d.idDoctor = a.idDoctor
+where finished = 1;
 END //
 DELIMITER ;

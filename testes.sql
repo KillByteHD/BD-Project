@@ -26,6 +26,11 @@ select f_lucroDoctorEntreDatas(1, "1600-03-27 22:15:39", "2800-03-27 22:15:39");
 call p_listarConsultasEntreDatas("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 call p_listarRealizadasEntreDatas("2019-03-27 22:15:39");
 call p_listarMarcadasEntreDatas("2020-03-27 22:15:39");
+call p_medicosNaoConsultaAtletasCidade ("Lisboa");
+call p_atletasSoConsultadosUmaEspecialidade();
+call p_especialidadeComMaisConsultas();
+call p_categoriasComMaisConsultas ();
+call p_modalidadesComMaisConsultas ();
 
 call p_adicionarConsulta(18, 347, 'Nada a declarar.', 104.91, '2019-11-08 14:17:19', 1);
 Select * from appointment;
@@ -51,3 +56,4 @@ VALUES (13, 335, 'Nada a declarar.', 782.33, '2015-02-09 19:00:00', 0);
 
 INSERT INTO umclinic.appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
 VALUES (1, 335, 'Nada a declarar.', 782.33, '2015-02-09 19:00:00', 0);
+

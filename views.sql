@@ -16,6 +16,7 @@ Select sum(a.price) as montante
 from appointment a
 where finished = 1;
 
+select * from v_medicosPorEspecialidade;
 Create view v_medicosPorEspecialidade as 
 Select e.designation as Expertise, count(*) as NumberOfDoctors
 from doctor d, expertise e
@@ -24,9 +25,10 @@ group by (e.idExpertise)
 order by (count(*)) desc;
 
 Create view v_mediaPeso as 
-Select avg(a.weight) 
+Select avg(a.weight) as "Peso médio" 
 from athlete a;
 
+select * from v_ConsultasPorMedico;
 Create view v_consultasPorMedico as 
 Select d.nameDoctor as Name, count(*) as NumberOfAppointments
 from appointment a, doctor d
@@ -56,6 +58,8 @@ INNER JOIN club c ON c.idClub = atl.idClub
 group by (c.idClub) 
 order by (count(*)) desc limit 5;
 
+select * from v_modalidadesComMaisConsultas;
+
 Create view v_modalidadesComMaisConsultas as 
 Select m.nameModality as Name, count(*) as NumberOfAppointments
 from appointment a 
@@ -64,14 +68,16 @@ INNER JOIN modality m ON m.idModality = atl.idModality
 group by (m.idModality) 
 order by (count(*)) desc limit 5;
 
+select * from v_categoriasComMaisConsultas;
 Create view v_categoriasComMaisConsultas as 
-Select c.nameClub as Name, count(*) as NumberOfAppointments
+Select c.nameCategory as Name, count(*) as NumberOfAppointments
 from appointment a 
 INNER JOIN athlete atl ON a.idAthlete = atl.idAthlete
 INNER JOIN category c ON c.idCategory = atl.idCategory
 group by (c.idCategory) 
 order by (count(*)) desc;
 
+select * from v_especialidadeComMaisConsultas;
 Create view v_especialidadeComMaisConsultas as 
 Select e.designation as Name, count(*) as NumberOfAppointments
 from appointment a 
@@ -80,6 +86,7 @@ INNER JOIN expertise e on d.idExpertise = e.idExpertise
 group by (e.idExpertise) 
 order by (count(*)) desc limit 5;
 
+select * from v_atletasSoConsultadosUmaEspecialidade;
 Create view v_atletasSoConsultadosUmaEspecialidade as 
 Select atl.nameAthlete as Name, e.designation as Expertise
 from appointment a 
@@ -89,9 +96,10 @@ INNER JOIN expertise e on d.idExpertise = e.idExpertise
 group by a.idAthlete
 having count(*) = 1;
 
+select * from v_medicosNaoConsultaAtletasLisboa;
 Create view v_medicosNaoConsultaAtletasLisboa as 
 Select distinct d.nameDoctor as Name
-from appointment a 
+from appointment a 	
 inner JOIN doctor d on d.idDoctor = a.idDoctor
 inner join athlete atl on atl.idAthlete = a.idAthlete
 inner join zipcode z on z.zipcode = atl.idZipcode
