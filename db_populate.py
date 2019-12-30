@@ -28,7 +28,7 @@ try:
 	site_2.raise_for_status()
 
 except HTTPError as err:
-	print(f'HTTP Error: {err}')
+	print(f'HTTP Error, ou seja o site não está ativo: {err}')
 
 except Exception:
 	print(f'Not an HTTP Error: {err}')
@@ -226,8 +226,8 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 		mes = random.randint(1,12)
 		dias = random.randint(1,28)
 		horas = random.randint(10,23)
-		minutos = random.randint(0, 59)
-		segundos = random.randint(0,59)
+		minutos = random.randint(0, 1) * 30
+		segundos = 0
 
 
 		if dias < 10 and mes < 10:
