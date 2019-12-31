@@ -144,7 +144,7 @@ animation_func.start()
 
 # Execution Time 
 
-start = time.clock()
+start = time.time()
 
 # Gerar SQL
 
@@ -309,4 +309,4 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 complete = True
 animation_func.join()
 print("Ficheiro db_populate.sql gerado com sucesso!")
-print(f'Tempo de execução: {round(time.clock() - start, 3)}s')
+print(f'Tempo de execução: {round(time.time() - start, 3)}s')
