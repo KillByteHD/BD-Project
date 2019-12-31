@@ -120,12 +120,13 @@ else:
 	print(f'Categorias: {len(categorias)}')
 	print(f'Códigos Postais: {len(zipcodes)}')
 	print(f'Especialidades: {len(especialidades)}')
-	print(f'Médicos: {len(medicos)}\n')
+	print(f'Médicos: {len(medicos)}')
+	print(f'Consultas : 400\n')
 	print(f'Gerando SQL...\n')
 	
 
-# Gerar SQL
 
+# ---------------------------- LOADING ANIMATION ----------------------------
 complete = False
 
 def animation():
@@ -138,6 +139,14 @@ def animation():
 
 animation_func = threading.Thread(target=animation)
 animation_func.start()
+
+# ---------------------------------------------------------------------------
+
+# Execution Time 
+
+start = time.time()
+
+# Gerar SQL
 
 i = 1
 
@@ -300,3 +309,4 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 complete = True
 animation_func.join()
 print("Ficheiro db_populate.sql gerado com sucesso!")
+print(f'Tempo de execução: {round(time.time() - start, 3)}s')
