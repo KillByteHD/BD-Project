@@ -1,4 +1,5 @@
-drop function f_lucroEntreDatas;
+/*drop function f_lucroEntreDatas;*/
+
 DELIMITER $$
 CREATE FUNCTION f_lucroEntreDatas(
     date1 Datetime,
@@ -10,8 +11,8 @@ Declare total Decimal(9,3);
 Select sum(a.price)
 into total
 from Appointment a
-where a.date>=date1
-and a.date <= date2;
+where a.dateAppointment>=date1
+and a.dateAppointment <= date2;
 RETURN total;
 END $$
 
@@ -29,8 +30,8 @@ select e.designation into esp
 from expertise e 
 inner join doctor d on e.idExpertise = d.idExpertise
 inner join appointment a on a.idDoctor = d.idDoctor
-where a.date>=date1
-and a.date <= date2
+where a.dateAppointment>=date1
+and a.dateAppointment <= date2
 group by e.designation
 order by count(e.idExpertise) DESC limit 1;
 RETURN esp;
@@ -45,14 +46,14 @@ CREATE FUNCTION f_clubeEntreDatas(
 deterministic 
 BEGIN
 Declare res VARCHAR(100);
-select b.name into res
+select b.nameClub into res
 from appointment a
 inner join athlete atl on a.idAthlete = atl.idAthlete
 inner join club b on b.idClub = atl.idClub
-where a.date>=date1
-and a.date <= date2
-group by b.name
-order by count(b.name) DESC limit 1;
+where a.dateAppointment>=date1
+and a.dateAppointment <= date2
+group by b.nameClub
+order by count(b.nameClub) DESC limit 1;
 RETURN res;
 END $$
 
@@ -65,13 +66,13 @@ CREATE FUNCTION f_atletaEntreDatas(
 deterministic 
 BEGIN
 Declare res VARCHAR(100);
-select atl.name into res
+select atl.nameAthlete into res
 from appointment a
 inner join athlete atl on a.idAthlete = atl.idAthlete
-where a.date>=date1
-and a.date <= date2
-group by atl.name
-order by count(atl.name) DESC limit 1;
+where a.dateAppointment>=date1
+and a.dateAppointment <= date2
+group by atl.nameAthlete
+order by count(atl.nameAthlete) DESC limit 1;
 RETURN res;
 END $$
 
@@ -85,13 +86,13 @@ CREATE FUNCTION f_doctorEntreDatas(
 deterministic 
 BEGIN
 Declare res VARCHAR(100);
-select d.name into res
+select d.nameDoctor into res
 from appointment a
 inner join doctor d on a.idDoctor = d.idDoctor
-where a.date>=date1
-and a.date <= date2
-group by d.name
-order by count(d.name) DESC limit 1;
+where a.dateAppointment>=date1
+and a.dateAppointment <= date2
+group by d.nameDoctor
+order by count(d.nameDoctor) DESC limit 1;
 RETURN res;
 END $$
 
@@ -105,14 +106,14 @@ CREATE FUNCTION f_categoryEntreDatas(
 deterministic 
 BEGIN
 Declare res VARCHAR(100);
-select c.name into res
+select c.nameCategory into res
 from appointment a
 inner join athlete atl on a.idAthlete = atl.idAthlete
 inner join category c on c.idCategory = atl.idCategory
-where a.date>=date1
-and a.date <= date2
-group by c.name
-order by count(c.name) DESC limit 1;
+where a.dateAppointment>=date1
+and a.dateAppointment <= date2
+group by c.nameCategory
+order by count(c.nameCategory) DESC limit 1;
 RETURN res;
 END $$
 
@@ -125,14 +126,14 @@ CREATE FUNCTION f_modalityEntreDatas(
 deterministic 
 BEGIN
 Declare res VARCHAR(100);
-select m.name into res
+select m.nameModality into res
 from appointment a
 inner join athlete atl on a.idAthlete = atl.idAthlete
 inner join modality m on m.idModality = atl.idModality
-where a.date>=date1
-and a.date <= date2
-group by m.name
-order by count(m.name) DESC limit 1;
+where a.dateAppointment>=date1
+and a.dateAppointment <= date2
+group by m.nameModality
+order by count(m.nameModality) DESC limit 1;
 RETURN res;
 END $$
 
@@ -151,8 +152,8 @@ Select sum(a.price) into res
 from appointment a inner join doctor d on d.idDoctor = a.idDoctor
 where a.idDoctor = id
 and a.finished = 1
-and a.date>=date1
-and a.date <= date2;
+and a.dateAppointment>=date1
+and a.dateAppointment <= date2;
 RETURN res;
 END $$
 
