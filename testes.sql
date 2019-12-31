@@ -31,6 +31,7 @@ call p_atletasSoConsultadosUmaEspecialidade();
 call p_especialidadeComMaisConsultas();
 call p_categoriasComMaisConsultas ();
 call p_modalidadesComMaisConsultas ();
+call p_consultasPassadas();
 
 call p_adicionarConsulta(18, 347, 'Nada a declarar.', 104.91, '2019-11-08 14:17:19', 1);
 Select * from appointment;

@@ -287,7 +287,6 @@ where finished = 1;
 END //
 DELIMITER ;
 
-#ainda falta testar esta
 DELIMITER //
 CREATE PROCEDURE p_consultasPassadas ()
 BEGIN
