@@ -1,3 +1,5 @@
+import threading
+import time
 from bs4 import BeautifulSoup
 import requests
 from pathlib import Path
@@ -6,7 +8,8 @@ import codecs
 
 # Dados Iniciais
 random.seed()
-
+ids_athlete = []
+ids_doctor = []
 categorias = ["Escolinhas", "Infantis", "Juvenis", "Juniores", "Seniores"]
 cidades = ["Angra do Heroísmo", "Praia da Vitória", "Ponta Delgada", "Lisboa", "Porto", "Funchal", "Coimbra", "Braga", "Faro", "Portimão", "Vila Real", "Alentejo", "Santarém", "Aveiro", "Beja", "Vila do Conde", "Paris", "Angola", "Londres", "Praga", "Bélgica", "Moçambique"]
 zipcodes = [f'{random.randint(1000,9999)}-{random.randint(100,999)}' for i in range (len(cidades))]
@@ -19,81 +22,122 @@ especialidades = ["Anatomia Patológica", "Anestesiologia", "Cardiologia", "Ciru
 
 # Requests
 
-try:
+# try:
 
-	site_1 = requests.get("http://www.idesporto.pt/ListaAtletas.aspx")
-	site_2 = requests.get("https://regrasdoesporte.com.br/atletismo-regras-modalidades-corrida-arremessos-e-regras.html")
+# 	site_1 = requests.get("http://www.idesporto.pt/ListaAtletas.aspx")
+# 	site_2 = requests.get("https://regrasdoesporte.com.br/atletismo-regras-modalidades-corrida-arremessos-e-regras.html")
 
-	site_1.raise_for_status()
-	site_2.raise_for_status()
+# 	site_1.raise_for_status()
+# 	site_2.raise_for_status()
 
-except HTTPError as err:
-	print(f'HTTP Error, ou seja o site não está ativo: {err}')
+# except HTTPError as err:
+# 	print(f'HTTP Error, ou seja o site não está ativo: {err}')
 
-except Exception:
-	print(f'Not an HTTP Error: {err}')
+# except Exception:
+# 	print(f'Not an HTTP Error: {err}')
 
-else:
-	print("Sites encontrados e disponíveis!")
+# else:
+# 	print("Sites encontrados e disponíveis!")
 
 # BeautifulSoup
 
 atletas = []
 modalidades = []
 
-soup_1 = BeautifulSoup(site_1.text, 'html.parser')
-soup_2 = BeautifulSoup(site_2.text, 'html.parser')
-print("Sites processados com bs4!")
+# soup_2 = BeautifulSoup(site_2.text, 'html.parser')
+# print("Sites processados com bs4!")
 
-atletas = soup_1.find('table').find_all('tr')
-modalidades = soup_2.find_all('strong')[1:len(modalidades)-4]
+# modalidades = soup_2.find_all('strong')[1:len(modalidades)-4]
 
 # File
 
-my_file_1 = Path("atletas.txt")
-my_file_2 = Path("modalidades.txt")
+# my_file_2 = Path("modalidades.txt")
 
-if my_file_1.exists() and my_file_2.exists():
-	with open('atletas.txt', 'w') as file:
-		file.write('')
-
-	with open('modalidades.txt', 'w') as file:
-		file.write('')
+# if my_file_2.exists():
+	
+# 	with open('modalidades.txt', 'w') as file:
+# 		file.write('')
 
 # Escrever os nomes em ficheiros.
 
-for atleta in atletas[1:]:
-	nome = atleta.find_all('td')[1].get_text()
-	capitalized = list(map(lambda x: x.capitalize(), nome.split()))
-	good_name = ' '.join(capitalized)
+# for atleta in atletas[1:]:
+# 	nome = atleta.find_all('td')[1].get_text()
+# 	capitalized = list(map(lambda x: x.capitalize(), nome.split()))
+# 	good_name = ' '.join(capitalized)
 	
-	atletas_nomes.append(good_name)
+# 	atletas_nomes.append(good_name)
 
-	with open('atletas.txt', 'a') as file:
-		file.write(good_name + '\n')
+# 	with open('atletas.txt', 'a') as file:
+# 		file.write(good_name + '\n')
 
-print("Atletas escritos em atletas.txt!")
+# print("Atletas escritos em atletas.txt!")
 
-for modalidade in modalidades:
-	capitalized = list(map(lambda x: x.capitalize(), modalidade.get_text().split()))
-	good_name = ' '.join(capitalized)
+# for modalidade in modalidades:
+# 	capitalized = list(map(lambda x: x.capitalize(), modalidade.get_text().split()))
+# 	good_name = ' '.join(capitalized)
 
-	modalidades_nomes.append(good_name)
+# 	modalidades_nomes.append(good_name)
 
-	with open('modalidades.txt', 'a') as file:
-		file.write(good_name + '\n')
+# 	with open('modalidades.txt', 'a') as file:
+# 		file.write(good_name + '\n')
 
 # Modalidades em Falta
 
-modalidades_nomes.append("Lançamento")
+# modalidades_nomes.append("Lançamento")
 
-with open('modalidades.txt', 'a') as file:
-		file.write("Lançamento")
+# with open('modalidades.txt', 'a') as file:
+# 		file.write("Lançamento")
 	
 
-print("Modalidades escritas em modalidades.txt!")
+# print("Modalidades escritas em modalidades.txt!")
+
+# -------------------------------------------------------------------------------
+
+# Obter os nomes de atletas e modalidades dos ficheiros .txt.
+
+try:
+	with codecs.open('atletas.txt', 'r', 'utf-8') as file:
+		line = file.readline()
+		while line[:len(line) - 1]:
+			atletas_nomes.append(line.replace('\n', '').replace('\r',''))
+			line = file.readline()
+
+	with open('modalidades.txt', 'r') as file:
+		line = file.readline()
+		while line[:len(line) - 1]:
+			modalidades_nomes.append(line.replace('\n', ''))
+			line = file.readline()
+
+except Exception:
+	print("Ficheiros .txt não encontrados ou mal formatados!")
+	raise
+
+else:
+	print("Ficheiros .txt encontrados e dados importados!")
+	print(f'Atletas: {len(atletas_nomes)}')
+	print(f'Modalidades: {len(modalidades_nomes)}')
+	print(f'Clubes: {len(clubes)}')
+	print(f'Categorias: {len(categorias)}')
+	print(f'Códigos Postais: {len(zipcodes)}')
+	print(f'Especialidades: {len(especialidades)}')
+	print(f'Médicos: {len(medicos)}\n')
+	print(f'Gerando SQL...\n')
+	
 
 # Gerar SQL
+
+complete = False
+
+def animation():
+	animation = "|/-\\"
+	idx = 0
+	while not complete:
+	    print(animation[idx % len(animation)], end="\r")
+	    idx += 1
+	    time.sleep(0.1)
+
+animation_func = threading.Thread(target=animation)
+animation_func.start()
 
 i = 1
 
@@ -167,6 +211,8 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 	file.write("/* Inserir os Médicos na tabela \"doctor\" */\n")
 	file.write("INSERT INTO doctor (idDoctor, birthdate, nameDoctor, idZipcode, cellphone, idExpertise)\nVALUES\n")
 	for medico in medicos:
+		idd = random.randint(10000000, 99999999)
+		ids_doctor.append(idd)
 		ano = random.randint(1970,1989)
 		mes = random.randint(1,12)
 		dias = random.randint(1,28)
@@ -183,10 +229,10 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 
 
 		if (i == len(medicos)):
-			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(1, len(especialidades))});\n\n')
+			file.write(f'\t({idd}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(1, len(especialidades))});\n\n')
 
 		else:
-			file.write(f'\t({i}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(1, len(especialidades))}),\n')
+			file.write(f'\t({idd}, \'{birthdate}\', \'{medico}\', \'{zipcodes[random.randint(0, len(cidades) - 1)]}\', 91{random.randint(1000000,9999999)}, {random.randint(1, len(especialidades))}),\n')
 
 		i += 1
 
@@ -195,6 +241,8 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 	file.write("/* Inserir os Atletas na tabela \"athlete\" */\n")
 	file.write("INSERT INTO athlete (idAthlete, nameAthlete, birthdate, weight, idModality, idCategory, idClub, idZipcode)\nVALUES\n")
 	for nome in atletas_nomes:
+		idd = random.randint(10000000, 99999999) 
+		ids_athlete.append(idd)
 		ano = random.randint(1990,2019)
 		mes = random.randint(1,12)
 		dias = random.randint(1,28)
@@ -209,10 +257,10 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 			birthdate = f'{ano}-{mes}-{dias}'
 
 		if (i == len(atletas_nomes)):
-			file.write(f'\t({i}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(1, len(modalidades_nomes))}, {random.randint(1, len(categorias))}, {random.randint(1, len(clubes))}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\');\n\n')
+			file.write(f'\t({idd}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(1, len(modalidades_nomes))}, {random.randint(1, len(categorias))}, {random.randint(1, len(clubes))}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\');\n\n')
 
 		else:
-			file.write(f'\t({i}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(1, len(modalidades_nomes))}, {random.randint(1, len(categorias))}, {random.randint(1, len(clubes))}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\'),\n')
+			file.write(f'\t({idd}, \'{nome}\', \'{birthdate}\', {round(random.uniform(40,120), 1)}, {random.randint(1, len(modalidades_nomes))}, {random.randint(1, len(categorias))}, {random.randint(1, len(clubes))}, \'{zipcodes[random.randint(0, len(zipcodes) - 1)]}\'),\n')
 
 		i += 1
 
@@ -242,12 +290,13 @@ with codecs.open('db_populate.sql', 'w','utf-8') as file:
 		datetime = f'{date} {horas}:{minutos if minutos > 9 else "0" + str(minutos)}:{segundos if segundos > 9 else "0" + str(segundos)}'
 
 		if (i == number - 1):
-			file.write(f'\t({random.randint(1, len(medicos))}, {random.randint(1, len(atletas_nomes))}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)});\n\n')
+			file.write(f'\t({ids_doctor[random.randint(0, len(ids_doctor) -1)]}, {ids_athlete[random.randint(0, len(ids_athlete) - 1)]}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)});\n\n')
 
 		else:
-			file.write(f'\t({random.randint(1, len(medicos))}, {random.randint(1, len(atletas_nomes))}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)}),\n')
+			file.write(f'\t({ids_doctor[random.randint(0, len(ids_doctor) - 1)]}, {ids_athlete[random.randint(0, len(ids_athlete) - 1)]}, \'Nada a declarar.\', {round(random.uniform(10,1000), 2)}, \'{datetime}\', {random.randint(0,1)}),\n')
 
 		i += 1
 
-
+complete = True
+animation_func.join()
 print("Ficheiro db_populate.sql gerado com sucesso!")
