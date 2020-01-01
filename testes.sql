@@ -35,6 +35,14 @@ call p_modalidadesComMaisConsultas ();
 call p_consultasPassadas();
 call p_totalFaturado ();
 call p_mediaPeso();
+call p_medicosNaoConsultaAtletasCidade ("Lisboa");
+call p_especialidadeComMaisConsultas ();
+call p_categoriasComMaisConsultas();
+call p_modalidadesComMaisConsultas();
+call p_clubesComMaisConsultas();
+call p_atletasComMaisConsultas();
+call p_medicoComMaisConsultas();
+call p_consultasPorMedico();
 
 call p_adicionarConsulta(18, 347, 'Nada a declarar.', 104.91, '2019-11-08 14:17:19', 1);
 Select * from appointment;

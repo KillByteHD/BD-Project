@@ -23,10 +23,10 @@ DELIMITER $$
 CREATE FUNCTION f_especialidadeEntreDatas(
     date1 Datetime,
     date2 Datetime
-) RETURNS VARCHAR(20)
+) RETURNS VARCHAR(45)
 deterministic 
 BEGIN
-Declare esp VARCHAR(20);
+Declare esp VARCHAR(45);
 select e.designation into esp
 from expertise e 
 inner join doctor d on e.idExpertise = d.idExpertise
