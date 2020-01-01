@@ -276,8 +276,6 @@ order by (count(*)) desc;
 END //
 DELIMITER ;
 
-
-#ainda falta testar esta
 DELIMITER //
 CREATE PROCEDURE p_totalFaturado ()
 BEGIN

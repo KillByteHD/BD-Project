@@ -1,4 +1,4 @@
-/*drop function f_lucroEntreDatas;*/
+drop function f_lucroEntreDatas;
 
 DELIMITER $$
 CREATE FUNCTION f_lucroEntreDatas(
@@ -12,7 +12,8 @@ Select sum(a.price)
 into total
 from Appointment a
 where a.dateAppointment>=date1
-and a.dateAppointment <= date2;
+and a.dateAppointment <= date2
+and a.finished = 1;
 RETURN total;
 END $$
 

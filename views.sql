@@ -26,6 +26,7 @@ where d.idExpertise = e.idExpertise
 group by (e.idExpertise) 
 order by (count(*)) desc;
 
+select * from v_mediaPeso;
 Create view v_mediaPeso as 
 Select avg(a.weight) as "Peso médio" 
 from athlete a;
