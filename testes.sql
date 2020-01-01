@@ -7,6 +7,7 @@ delete from club;
 delete from modality;
 delete from zipcode;
 
+select * from appointment where idAthlete=12249709;
 create view v_especialidade as
 Select d.nameDoctor, e.designation
 from doctor d, expertise e 
@@ -21,12 +22,12 @@ select f_atletaEntreDatas("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_doctorEntreDatas("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_categoryEntreDatas("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_modalityEntreDatas("1600-03-27 22:15:39", "2800-03-27 22:15:39");
-select f_lucroDoctorEntreDatas(1, "1600-03-27 22:15:39", "2800-03-27 22:15:39");
-select f_lucroAtleta(2);
+select f_lucroDoctorEntreDatas(13712728, "1600-03-27 22:15:39", "2800-03-27 22:15:39");
+select f_lucroAtleta(10229165);
 
 call p_listarConsultasEntreDatas("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 call p_listarRealizadasEntreDatas("2019-03-27 22:15:39");
-call p_listarMarcadasEntreDatas("2020-03-27 22:15:39");
+call p_listarMarcadasEntreDatas("2000-01-01 12:00:00");
 call p_medicosNaoConsultaAtletasCidade ("Lisboa");
 call p_atletasSoConsultadosUmaEspecialidade();
 call p_especialidadeComMaisConsultas();
@@ -44,27 +45,30 @@ call p_atletasComMaisConsultas();
 call p_medicoComMaisConsultas();
 call p_consultasPorMedico();
 
-call p_adicionarConsulta(18, 347, 'Nada a declarar.', 104.91, '2019-11-08 14:17:19', 1);
+call p_adicionarConsulta(13712728, 12249709, 'Nada a declarar.', 104.91, '2015-02-09 19:00:00', 1);
 Select * from appointment;
 
-call p_eliminarConsulta(18, 347, '2019-11-08 14:17:19');
-call p_alterarPesoAtleta(56, 1);
-select * from athlete;
-call p_alterarPesoAtleta(55.8, 1);
+call p_eliminarConsulta(13712728, 12249709, '2015-02-09 19:00:00');
+select * from athlete where idAthlete =12249709;
 
-/*(13, 335, 'Nada a declarar.', 782.33, '2015-02-09 19:17:11', 0),*/
-call p_alterarHorarioConsulta('2015-02-09 19:17:11','2019-02-09 19:17:11', 13, 335);
+call p_alterarPesoAtleta(95.3, 12249709);
 
-select price from appointment where idDoctor = 13 and idAthlete = 335 and dateAppointment = '2015-02-09 19:17:11';
+#IN newdate Datetime, olddate Datetime, idD INT(11), idA INT(11))
+call p_alterarHorarioConsulta('2015-02-09 19:00:00','2015-02-09 19:00:00',13712728,12249709);
+
 
 select * from appointment a
-where a.idAthlete = 335 and a.idDoctor = 13;
+where a.idAthlete = 12249709 and a.idDoctor = 13712728;
 
+select * from athlete where idAthlete = 12249709;
+
+#14585939
 INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
-VALUES (11, 110, 'Nada a declarar.', 403.1, '1992-04-28 11:30:04', 0);
+VALUES (13712728, 14585939, 'Nada a declarar.', 403.1, '2001-05-10 16:00:00', 0);
 
-INSERT INTO umclinic.appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
-VALUES (13, 335, 'Nada a declarar.', 782.33, '2015-02-09 19:00:00', 0);
+delete from appointment where idDoctor = 13712728 and idAthlete=14585939 and dateAppointment= '2001-04-28 11:30:04';
+#23738706
+INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
+VALUES (23738706, 12249709, 'Nada a declarar.', 403.1, '2001-05-10 16:00:00', 0);
 
-INSERT INTO umclinic.appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
-VALUES (1, 335, 'Nada a declarar.', 782.33, '2015-02-09 19:00:00', 0);
+#ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';

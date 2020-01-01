@@ -2,10 +2,8 @@ db.appointment.find({}).sort({idAthlete : 1});
 
 //p_consultasPassadas
 db.appointment.find({finished: 1});
-
-db.appointment.find({idAthlete : 8});
-
-db.appointment.find({idAthlete : 8, });
+db.appointment.find({idAthlete : 12249709});
+db.athlete.find({idAthlete : 12249709});
 
 //p_listarMarcadasEntreDatas
 db.appointment.find({ 
@@ -60,7 +58,7 @@ db.appointment.aggregate([
 db.appointment.aggregate([
     {
      $match: {
-        idDoctor: 1,
+        idDoctor: 13712728,
         finished: 1,
         dateAppointment: {$gte: ISODate("1600-03-27T22:15:39.000Z"), $lte: ISODate("2800-03-27T22:15:39.000Z")}
      }
@@ -78,7 +76,7 @@ db.appointment.aggregate([
 db.appointment.aggregate([
     {
      $match: {
-        idAthlete: 2,
+        idAthlete: 10229165,
         finished: 1,
      }
     }, {
@@ -107,78 +105,64 @@ db.athlete.aggregate([
 ]);
 
 
-db.appointment.aggregate([
-    {
-     $match: {
-     }
-    }, {
-        $group: {
-            _id: "null",
-            consultas: {
-                $count: "$idDoctor"
-            }
-        }
-    }
-]);
-
 //p_alterarPesoAtleta
 db.athlete.updateOne(
     {
-        idAthlete:1,
+        idAthlete:12249709,
     }, {
-        $set:{weight:108.8}
+        $set:{weight:95.3}
     }
 );
 
 //p_addObservations
 db.appointment.update(
     {
-        idAthlete:1,
-        idDoctor:1,
-        dateAppointment: ISODate("2018-11-18T16:30:00.000Z")
+        idAthlete:12249709,
+        idDoctor:13712728,
+        dateAppointment: ISODate("2015-02-09T19:00:00.000Z")
     }, {
         $set:{observations: "Nada a declarar."}
     }
 );
 
-db.appointment.find({        dateAppointment: ISODate("2018-11-18T16:30:00.000Z")});
+db.appointment.find({dateAppointment: ISODate("2019-11-18T16:30:00.000Z")});
 
 //p_adicionarConsulta
 db.appointment.insert(
-    {idDoctor:20, idAthlete:732,observations: "Nada", price: 0.0, dateAppointment:ISODate("2018-11-18T16:30:00.000Z"),finished:0}
+    {idDoctor:13712728, idAthlete:12249709,observations: "Nada", price: 0.0, dateAppointment:ISODate("2019-11-18T16:30:00.000Z"),finished:0}
 );
 
 //p_eliminarConsulta
 db.appointment.findOneAndDelete(
-    {idDoctor:20, idAthlete:732, dateAppointment:ISODate("2018-11-18T16:30:00.000Z")}
+    {idDoctor:13712728, idAthlete:12249709, dateAppointment:ISODate("2019-11-18T16:30:00.000Z")}
 );
 
 //p_finalizarConsulta
 db.appointment.update(
     {
-        idAthlete:1,
-        idDoctor:1,
-        dateAppointment: ISODate("2018-11-18T16:30:00.000Z")
+        idAthlete:12249709,
+        idDoctor:13712728,
+        dateAppointment: ISODate("2015-02-09T19:00:00.000Z")
     }, {
         $set:{finished: 1}
     }
 );
 
-db.appointment.find({        dateAppointment: ISODate("2018-11-18T16:30:00.000Z")});
+db.appointment.find({dateAppointment: ISODate("2015-02-09T19:00:00.000Z")});
 
 
 //p_alterarHorarioConsulta
 db.appointment.update(
     {
-        idAthlete:1,
-        idDoctor:1,
-        dateAppointment: ISODate("2018-11-18T16:30:00.000Z")
+        idAthlete:12249709,
+        idDoctor:13712728,
+        dateAppointment: ISODate("2015-02-09T19:00:00.000Z")
     }, {
-        $set:{dateAppointment: ISODate("2019-11-18T16:30:00.000Z")}
+        $set:{dateAppointment: ISODate("2015-02-09T19:00:00.000Z")}
     }
 );
 
-db.appointment.find({        dateAppointment: ISODate("2018-11-18T16:30:00.000Z")});
+db.appointment.find({dateAppointment: ISODate("2016-02-09T19:00:00.000Z")});
 
 //p_medicosNaoConsultaAtletasCidade
 db.appointment.aggregate(
@@ -274,7 +258,7 @@ db.appointment.aggregate(
 );
 
 //p_especialidadeComMaisConsultas
-db.appointment.aggregate(
+db.getCollection("appointment").aggregate(
     [
         { 
             "$project" : {
@@ -313,7 +297,7 @@ db.appointment.aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "expertise᎐designation" : "$expertise.designation"
+                    "expertise᎐idExpertise" : "$expertise.idExpertise"
                 }, 
                 "COUNT(*)" : {
                     "$sum" : NumberInt(1)
@@ -322,7 +306,7 @@ db.appointment.aggregate(
         }, 
         { 
             "$project" : {
-                "expertise.designation" : "$_id.expertise᎐designation", 
+                "expertise.idExpertise" : "$_id.expertise᎐idExpertise", 
                 "COUNT(*)" : "$COUNT(*)", 
                 "_id" : NumberInt(0)
             }
@@ -343,7 +327,7 @@ db.appointment.aggregate(
 
 
 //p_categoriasComMaisConsultas
-db.appointment.aggregate(
+db.getCollection("appointment").aggregate(
     [
         { 
             "$project" : {
@@ -382,7 +366,7 @@ db.appointment.aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "category᎐nameCategory" : "$category.nameCategory"
+                    "category᎐idCategory" : "$category.idCategory"
                 }, 
                 "COUNT(*)" : {
                     "$sum" : NumberInt(1)
@@ -391,7 +375,7 @@ db.appointment.aggregate(
         }, 
         { 
             "$project" : {
-                "category.nameCategory" : "$_id.category᎐nameCategory", 
+                "category.idCategory" : "$_id.category᎐idCategory", 
                 "COUNT(*)" : "$COUNT(*)", 
                 "_id" : NumberInt(0)
             }
@@ -408,7 +392,7 @@ db.appointment.aggregate(
 );
 
 //p_modalidadesComMaisConsultas
-db.appointment.aggregate(
+db.getCollection("appointment").aggregate(
     [
         { 
             "$project" : {
@@ -447,7 +431,7 @@ db.appointment.aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "modality᎐nameModality" : "$modality.nameModality"
+                    "modality᎐idModality" : "$modality.idModality"
                 }, 
                 "COUNT(*)" : {
                     "$sum" : NumberInt(1)
@@ -456,7 +440,7 @@ db.appointment.aggregate(
         }, 
         { 
             "$project" : {
-                "modality.nameModality" : "$_id.modality᎐nameModality", 
+                "modality.idModality" : "$_id.modality᎐idModality", 
                 "COUNT(*)" : "$COUNT(*)", 
                 "_id" : NumberInt(0)
             }
@@ -476,7 +460,7 @@ db.appointment.aggregate(
 );
 
 //p_clubesComMaisConsultas
-db.appointment.aggregate(
+db.getCollection("appointment").aggregate(
     [
         { 
             "$project" : {
@@ -515,7 +499,7 @@ db.appointment.aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "club᎐nameClub" : "$club.nameClub"
+                    "club᎐idClub" : "$club.idClub"
                 }, 
                 "COUNT(*)" : {
                     "$sum" : NumberInt(1)
@@ -524,7 +508,7 @@ db.appointment.aggregate(
         }, 
         { 
             "$project" : {
-                "club.nameClub" : "$_id.club᎐nameClub", 
+                "club.idClub" : "$_id.club᎐idClub", 
                 "COUNT(*)" : "$COUNT(*)", 
                 "_id" : NumberInt(0)
             }
@@ -544,7 +528,7 @@ db.appointment.aggregate(
 );
 
 //p_atletasComMaisConsultas
-db.appointment.aggregate(
+db.getCollection("appointment").aggregate(
     [
         { 
             "$project" : {
@@ -569,7 +553,7 @@ db.appointment.aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "athlete᎐nameAthlete" : "$athlete.nameAthlete"
+                    "athlete᎐idAthlete" : "$athlete.idAthlete"
                 }, 
                 "COUNT(*)" : {
                     "$sum" : NumberInt(1)
@@ -578,7 +562,7 @@ db.appointment.aggregate(
         }, 
         { 
             "$project" : {
-                "athlete.nameAthlete" : "$_id.athlete᎐nameAthlete", 
+                "athlete.idAthlete" : "$_id.athlete᎐idAthlete", 
                 "COUNT(*)" : "$COUNT(*)", 
                 "_id" : NumberInt(0)
             }
@@ -598,7 +582,7 @@ db.appointment.aggregate(
 );
 
 //p_medicoComMaisConsultas
-db.appointment.aggregate(
+db.getCollection("appointment").aggregate(
     [
         { 
             "$project" : {
@@ -623,7 +607,7 @@ db.appointment.aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "doctor᎐nameDoctor" : "$doctor.nameDoctor"
+                    "doctor᎐idDoctor" : "$doctor.idDoctor"
                 }, 
                 "COUNT(*)" : {
                     "$sum" : NumberInt(1)
@@ -632,7 +616,7 @@ db.appointment.aggregate(
         }, 
         { 
             "$project" : {
-                "doctor.nameDoctor" : "$_id.doctor᎐nameDoctor", 
+                "doctor.idDoctor" : "$_id.doctor᎐idDoctor", 
                 "COUNT(*)" : "$COUNT(*)", 
                 "_id" : NumberInt(0)
             }
@@ -652,7 +636,7 @@ db.appointment.aggregate(
 );
 
 //p_consultasPorMedico
-db.appointment.aggregate(
+db.getCollection("appointment").aggregate(
     [
         { 
             "$project" : {
@@ -677,7 +661,7 @@ db.appointment.aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "doctor᎐nameDoctor" : "$doctor.nameDoctor"
+                    "doctor᎐idDoctor" : "$doctor.idDoctor"
                 }, 
                 "COUNT(*)" : {
                     "$sum" : NumberInt(1)
@@ -686,7 +670,7 @@ db.appointment.aggregate(
         }, 
         { 
             "$project" : {
-                "doctor.nameDoctor" : "$_id.doctor᎐nameDoctor", 
+                "doctor.idDoctor" : "$_id.doctor᎐idDoctor", 
                 "COUNT(*)" : "$COUNT(*)", 
                 "_id" : NumberInt(0)
             }
@@ -703,7 +687,7 @@ db.appointment.aggregate(
 );
 
 //f_especialidadeEntreDatas
-db.expertise.aggregate(
+db.getCollection("expertise").aggregate(
     [
         { 
             "$project" : {
@@ -758,29 +742,29 @@ db.expertise.aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "expertise᎐designation" : "$expertise.designation"
+                    "expertise᎐idExpertise" : "$expertise.idExpertise"
                 }, 
-                "COUNT(expertise᎐nameExpertise)" : {
+                "COUNT(expertise᎐idExpertise)" : {
                     "$sum" : NumberInt(1)
                 }
             }
         }, 
         { 
             "$project" : {
-                "expertise.designation" : "$_id.expertise᎐designation", 
-                "COUNT(expertise.nameExpertise)" : "$COUNT(expertise᎐nameExpertise)", 
+                "expertise.idExpertise" : "$_id.expertise᎐idExpertise", 
+                "COUNT(expertise.idExpertise)" : "$COUNT(expertise᎐idExpertise)", 
                 "_id" : NumberInt(0)
             }
         }, 
         { 
             "$sort" : {
-                "COUNT(expertise.nameExpertise)" : NumberInt(-1)
+                "COUNT(expertise.idExpertise)" : NumberInt(-1)
             }
         }, 
         { 
             "$project" : {
                 "_id" : NumberInt(0), 
-                "expertise.designation" : "$expertise.designation"
+                "expertise.idExpertise" : "$expertise.idExpertise"
             }
         }, 
         { 
@@ -848,7 +832,7 @@ db.getCollection("appointment").aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "club᎐nameClub" : "$club.nameClub"
+                    "club᎐idClub" : "$club.idClub"
                 }, 
                 "COUNT(club᎐nameClub)" : {
                     "$sum" : NumberInt(1)
@@ -857,7 +841,7 @@ db.getCollection("appointment").aggregate(
         }, 
         { 
             "$project" : {
-                "club.nameClub" : "$_id.club᎐nameClub", 
+                "club.idClub" : "$_id.club᎐idClub", 
                 "COUNT(club.nameClub)" : "$COUNT(club᎐nameClub)", 
                 "_id" : NumberInt(0)
             }
@@ -870,7 +854,7 @@ db.getCollection("appointment").aggregate(
         { 
             "$project" : {
                 "_id" : NumberInt(0), 
-                "club.nameClub" : "$club.nameClub"
+                "club.idClub" : "$club.idClub"
             }
         }, 
         { 
@@ -924,7 +908,7 @@ db.getCollection("appointment").aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "athlete᎐nameAthlete" : "$athlete.nameAthlete"
+                    "athlete᎐idAthlete" : "$athlete.idAthlete"
                 }, 
                 "COUNT(athlete᎐nameAthlete)" : {
                     "$sum" : NumberInt(1)
@@ -933,7 +917,7 @@ db.getCollection("appointment").aggregate(
         }, 
         { 
             "$project" : {
-                "athlete.nameAthlete" : "$_id.athlete᎐nameAthlete", 
+                "athlete.idAthlete" : "$_id.athlete᎐idAthlete", 
                 "COUNT(athlete.nameAthlete)" : "$COUNT(athlete᎐nameAthlete)", 
                 "_id" : NumberInt(0)
             }
@@ -946,7 +930,7 @@ db.getCollection("appointment").aggregate(
         { 
             "$project" : {
                 "_id" : NumberInt(0), 
-                "athlete.nameAthlete" : "$athlete.nameAthlete"
+                "athlete.idAthlete" : "$athlete.idAthlete"
             }
         }, 
         { 
@@ -1001,7 +985,7 @@ db.getCollection("appointment").aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "doctor᎐nameDoctor" : "$doctor.nameDoctor"
+                    "doctor᎐idDoctor" : "$doctor.idDoctor"
                 }, 
                 "COUNT(doctor᎐nameDoctor)" : {
                     "$sum" : NumberInt(1)
@@ -1010,7 +994,7 @@ db.getCollection("appointment").aggregate(
         }, 
         { 
             "$project" : {
-                "doctor.nameDoctor" : "$_id.doctor᎐nameDoctor", 
+                "doctor.idDoctor" : "$_id.doctor᎐idDoctor", 
                 "COUNT(doctor.nameDoctor)" : "$COUNT(doctor᎐nameDoctor)", 
                 "_id" : NumberInt(0)
             }
@@ -1023,7 +1007,7 @@ db.getCollection("appointment").aggregate(
         { 
             "$project" : {
                 "_id" : NumberInt(0), 
-                "doctor.nameDoctor" : "$doctor.nameDoctor"
+                "doctor.idDoctor" : "$doctor.idDoctor"
             }
         }, 
         { 
@@ -1091,7 +1075,7 @@ db.getCollection("appointment").aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "category᎐nameCategory" : "$category.nameCategory"
+                    "category᎐idCategory" : "$category.idCategory"
                 }, 
                 "COUNT(category᎐nameCategory)" : {
                     "$sum" : NumberInt(1)
@@ -1100,7 +1084,7 @@ db.getCollection("appointment").aggregate(
         }, 
         { 
             "$project" : {
-                "category.nameCategory" : "$_id.category᎐nameCategory", 
+                "category.idCategory" : "$_id.category᎐idCategory", 
                 "COUNT(category.nameCategory)" : "$COUNT(category᎐nameCategory)", 
                 "_id" : NumberInt(0)
             }
@@ -1113,7 +1097,7 @@ db.getCollection("appointment").aggregate(
         { 
             "$project" : {
                 "_id" : NumberInt(0), 
-                "category.nameCategory" : "$category.nameCategory"
+                "category.idCategory" : "$category.idCategory"
             }
         }, 
         { 
@@ -1181,7 +1165,7 @@ db.getCollection("appointment").aggregate(
         { 
             "$group" : {
                 "_id" : {
-                    "modality᎐nameModality" : "$modality.nameModality"
+                    "modality᎐idModality" : "$modality.idModality"
                 }, 
                 "COUNT(modality᎐nameModality)" : {
                     "$sum" : NumberInt(1)
@@ -1190,7 +1174,7 @@ db.getCollection("appointment").aggregate(
         }, 
         { 
             "$project" : {
-                "modality.nameModality" : "$_id.modality᎐nameModality", 
+                "modality.idModality" : "$_id.modality᎐idModality", 
                 "COUNT(modality.nameModality)" : "$COUNT(modality᎐nameModality)", 
                 "_id" : NumberInt(0)
             }
@@ -1203,7 +1187,7 @@ db.getCollection("appointment").aggregate(
         { 
             "$project" : {
                 "_id" : NumberInt(0), 
-                "modality.nameModality" : "$modality.nameModality"
+                "modality.idModality" : "$modality.idModality"
             }
         }, 
         { 
