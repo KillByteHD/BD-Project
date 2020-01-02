@@ -1,16 +1,16 @@
 -- Athlete Privileges
-CREATE USER Athlete WITH PASSWORD = '?';
+CREATE USER Athlete identified by '?';
 GRANT SELECT ON umclinic.appointment TO Athlete;
 
 -- Receptionist Privileges
-CREATE USER Receptionist WITH PASSWORD = '?';
+CREATE USER Receptionist identified by '?';
 GRANT SELECT,INSERT,UPDATE,DELETE ON umclinic.appointment TO Receptionist;
   
 -- Doctor Privileges  
-CREATE USER Doctor  WITH PASSWORD = '?';
+CREATE USER Doctor identified by '?';
 GRANT SELECT ON umclinic.appointment TO Doctor;
   
   
-  
+flush privileges;  
   
   
