@@ -7,7 +7,7 @@
 #drop function f_modalityEntreDatas;
 #drop function f_lucroDoctorEntreDatas;
 #drop function f_lucroAtleta;
-drop function f_diasAteConsulta;
+#drop function f_diasAteConsulta;
 
 
 DELIMITER $$
