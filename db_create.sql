@@ -23,8 +23,10 @@ USE `umclinic` ;
 CREATE TABLE IF NOT EXISTS `umclinic`.`category` (
   `idCategory` INT(11) NOT NULL AUTO_INCREMENT,
   `nameCategory` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`idCategory`))
+  PRIMARY KEY (`idCategory`),
+  UNIQUE INDEX `nameCategory_UNIQUE` (`nameCategory` ASC) VISIBLE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -34,9 +36,10 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `umclinic`.`club` (
   `idClub` INT(11) NOT NULL AUTO_INCREMENT,
   `nameClub` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`idClub`))
+  PRIMARY KEY (`idClub`),
+  UNIQUE INDEX `nameClub_UNIQUE` (`nameClub` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 25
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -46,8 +49,10 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `umclinic`.`modality` (
   `idModality` INT(11) NOT NULL AUTO_INCREMENT,
   `nameModality` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`idModality`))
+  PRIMARY KEY (`idModality`),
+  UNIQUE INDEX `nameModality_UNIQUE` (`nameModality` ASC) VISIBLE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -90,9 +95,7 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`athlete` (
     REFERENCES `umclinic`.`modality` (`idModality`),
   CONSTRAINT `idZipcode`
     FOREIGN KEY (`idZipcode`)
-    REFERENCES `umclinic`.`zipcode` (`zipcode`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `umclinic`.`zipcode` (`zipcode`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -103,8 +106,10 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `umclinic`.`expertise` (
   `idExpertise` INT(11) NOT NULL AUTO_INCREMENT,
   `designation` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idExpertise`))
+  PRIMARY KEY (`idExpertise`),
+  UNIQUE INDEX `designation_UNIQUE` (`designation` ASC) VISIBLE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -121,13 +126,12 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`doctor` (
   PRIMARY KEY (`idDoctor`),
   INDEX `idExpertise_idx` (`idExpertise` ASC) VISIBLE,
   INDEX `idZipcode_idx` (`idZipcode` ASC) VISIBLE,
+  CONSTRAINT `doctor_ibfk_1`
+    FOREIGN KEY (`idZipcode`)
+    REFERENCES `umclinic`.`zipcode` (`zipcode`),
   CONSTRAINT `idExpertise`
     FOREIGN KEY (`idExpertise`)
-    REFERENCES `umclinic`.`expertise` (`idExpertise`),
-    FOREIGN KEY (`idZipcode`)
-    REFERENCES `umclinic`.`zipcode` (`zipcode`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `umclinic`.`expertise` (`idExpertise`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
