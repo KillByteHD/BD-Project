@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`category` (
   PRIMARY KEY (`idCategory`),
   UNIQUE INDEX `nameCategory_UNIQUE` (`nameCategory` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -39,7 +38,6 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`club` (
   PRIMARY KEY (`idClub`),
   UNIQUE INDEX `nameClub_UNIQUE` (`nameClub` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 25
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -52,7 +50,6 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`modality` (
   PRIMARY KEY (`idModality`),
   UNIQUE INDEX `nameModality_UNIQUE` (`nameModality` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -109,7 +106,6 @@ CREATE TABLE IF NOT EXISTS `umclinic`.`expertise` (
   PRIMARY KEY (`idExpertise`),
   UNIQUE INDEX `designation_UNIQUE` (`designation` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8;
 
 
