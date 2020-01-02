@@ -11,7 +11,7 @@
 
 
 DELIMITER $$
-CREATE FUNCTION f_lucroEntreDatas(
+CREATE FUNCTION f_profitBetweenDates(
     date1 Datetime,
     date2 Datetime
 ) RETURNS Decimal(9,3)
@@ -28,10 +28,10 @@ RETURN total;
 END $$
 
 
-#drop function f_especialidadeEntreDatas;
+#drop function f_moreAppointmentsExpertiseBetweenDates;
 
 DELIMITER $$
-CREATE FUNCTION f_especialidadeEntreDatas(
+CREATE FUNCTION f_moreAppointmentsExpertiseBetweenDates(
     date1 Datetime,
     date2 Datetime
 ) RETURNS VARCHAR(45)
@@ -49,9 +49,9 @@ order by count(e.idExpertise) DESC limit 1;
 RETURN esp;
 END $$
 
-#drop function f_clubeEntreDatas;
+#drop function f_moreAppointmentsClubBetweenDates;
 DELIMITER $$
-CREATE FUNCTION f_clubeEntreDatas(
+CREATE FUNCTION f_moreAppointmentsClubBetweenDates(
     date1 Datetime,
     date2 Datetime
 ) RETURNS VARCHAR(100)
@@ -69,9 +69,9 @@ order by count(b.nameClub) DESC limit 1;
 RETURN res;
 END $$
 
-#drop function f_atletaEntreDatas;
+#drop function f_moreAppointmentsAthleteBetweenDates;
 DELIMITER $$
-CREATE FUNCTION f_atletaEntreDatas(
+CREATE FUNCTION f_moreAppointmentsAthleteBetweenDates(
     date1 Datetime,
     date2 Datetime
 ) RETURNS VARCHAR(100)
@@ -89,9 +89,9 @@ RETURN res;
 END $$
 
 
-#drop function f_doctorEntreDatas;
+#drop function f_moreAppointmentsDoctorBetweenDates;
 DELIMITER $$
-CREATE FUNCTION f_doctorEntreDatas(
+CREATE FUNCTION f_moreAppointmentsDoctorBetweenDates(
     date1 Datetime,
     date2 Datetime
 ) RETURNS VARCHAR(100)
@@ -109,9 +109,9 @@ RETURN res;
 END $$
 
 
-#drop function f_categoryEntreDatas;
+#drop function f_moreAppointmentsCategoryBetweenDates;
 DELIMITER $$
-CREATE FUNCTION f_categoryEntreDatas(
+CREATE FUNCTION f_moreAppointmentsCategoryBetweenDates(
     date1 Datetime,
     date2 Datetime
 ) RETURNS VARCHAR(100)
@@ -129,9 +129,9 @@ order by count(c.nameCategory) DESC limit 1;
 RETURN res;
 END $$
 
-#drop function f_modalityEntreDatas;
+#drop function f_moreAppointmentsModalityBetweenDates;
 DELIMITER $$
-CREATE FUNCTION f_modalityEntreDatas(
+CREATE FUNCTION f_moreAppointmentsModalityBetweenDates(
     date1 Datetime,
     date2 Datetime
 ) RETURNS VARCHAR(100)
@@ -150,9 +150,9 @@ RETURN res;
 END $$
 
 
-#drop function f_lucroDoctorEntreDatas;
+#drop function f_profitFromDoctorBetweenDates;
 DELIMITER $$
-CREATE FUNCTION f_lucroDoctorEntreDatas(
+CREATE FUNCTION f_profitFromDoctorBetweenDates(
     id INT(11),
     date1 Datetime,
     date2 Datetime
@@ -169,9 +169,9 @@ and a.dateAppointment <= date2;
 RETURN res;
 END $$
 
-#drop function f_lucroAtleta;
+#drop function f_profitFromAthlete;
 DELIMITER $$
-CREATE FUNCTION f_lucroAtleta(
+CREATE FUNCTION f_profitFromAthlete(
     id INT(11)
 ) RETURNS decimal(8,2)
 deterministic 
@@ -185,7 +185,7 @@ RETURN res;
 END $$
 
 DELIMITER $$
-CREATE FUNCTION f_diasAteConsulta(
+CREATE FUNCTION f_daysTillAppointment(
     dateAppoint Datetime
 ) RETURNS int
 deterministic 
