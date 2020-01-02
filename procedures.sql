@@ -25,7 +25,11 @@ drop procedure p_alterarHorarioConsulta;
 DELIMITER //
 CREATE PROCEDURE p_alterarHorarioConsulta (IN newDate Datetime, original Datetime, idD INT(11), idA INT(11))
 BEGIN
-update appointment a set a.dateAppointment = newDate where a.dateAppointment = original and a.idDoctor = idD and idAthlete=idA;
+if (f_diasAteConsulta(original)>0 
+	and f_diasAteConsulta(newDate)>0 
+    and (select finished from appointment) =0) THEN
+		update appointment a set a.dateAppointment = newDate where a.dateAppointment = original and a.idDoctor = idD and idAthlete=idA;
+END IF;
 END //
 DELIMITER ;
 

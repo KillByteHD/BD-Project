@@ -7,6 +7,8 @@
 #drop function f_modalityEntreDatas;
 #drop function f_lucroDoctorEntreDatas;
 #drop function f_lucroAtleta;
+drop function f_diasAteConsulta;
+
 
 DELIMITER $$
 CREATE FUNCTION f_lucroEntreDatas(
@@ -182,6 +184,20 @@ and a.finished = 1;
 RETURN res;
 END $$
 
+DELIMITER $$
+CREATE FUNCTION f_diasAteConsulta(
+    dateAppoint Datetime
+) RETURNS int
+deterministic 
+BEGIN
+Declare res int;
+DECLARE dateNow datetime;
+select current_timestamp INTO dateNow;
+if(DATEDIFF(dateAppoint,dateNow)<0)
+then return -1;
+else return DATEDIFF(dateAppoint,dateNow);
+END IF;
+END $$
 
 
 

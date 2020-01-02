@@ -24,6 +24,7 @@ select f_categoryEntreDatas("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_modalityEntreDatas("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_lucroDoctorEntreDatas(13712728, "1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_lucroAtleta(10229165);
+select f_diasAteConsulta("1800-03-26 22:15:39");
 
 call p_listarConsultasEntreDatas("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 call p_listarRealizadasEntreDatas("2019-03-27 22:15:39");
@@ -53,9 +54,7 @@ select * from athlete where idAthlete =12249709;
 
 call p_alterarPesoAtleta(95.3, 12249709);
 
-#IN newdate Datetime, olddate Datetime, idD INT(11), idA INT(11))
-call p_alterarHorarioConsulta('2015-02-09 19:00:00','2015-02-09 19:00:00',13712728,12249709);
-
+call p_alterarHorarioConsulta('2019-02-09 19:00:00','2015-02-09 19:00:00',13712728,12249709);
 
 select * from appointment a
 where a.idAthlete = 12249709 and a.idDoctor = 13712728;
