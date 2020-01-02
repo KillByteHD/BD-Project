@@ -18,9 +18,3 @@ where finished = 0
 and f_diasAteConsulta(a.dateAppointment)>=0
 and f_diasAteConsulta(a.dateAppointment)<=7;
 
-select * from v_completedAppointments;
-Create view v_completedAppointments as 
-Select atl.nameAthlete as Athlete, d.nameDoctor as Doctor, a.dateAppointment, a.observations, a.price
-from Appointment a inner join athlete atl on a.idAthlete = atl.idAthlete
-inner join doctor d on d.idDoctor = a.idDoctor
-where finished = 1;
