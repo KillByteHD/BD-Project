@@ -150,20 +150,6 @@ db.appointment.update(
 
 db.appointment.find({dateAppointment: ISODate("2015-02-09T19:00:00.000Z")});
 
-
-//p_alterarHorarioConsulta
-db.appointment.update(
-    {
-        idAthlete:12249709,
-        idDoctor:13712728,
-        dateAppointment: ISODate("2015-02-09T19:00:00.000Z")
-    }, {
-        $set:{dateAppointment: ISODate("2015-02-09T19:00:00.000Z")}
-    }
-);
-
-db.appointment.find({dateAppointment: ISODate("2016-02-09T19:00:00.000Z")});
-
 //p_medicosNaoConsultaAtletasCidade
 db.appointment.aggregate(
     [
