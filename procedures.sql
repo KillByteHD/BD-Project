@@ -340,4 +340,32 @@ group by a.idAthlete
 having count(*) = 1;
 END //
 DELIMITER ;
+		
+drop procedure p_alterZipcodeDoctor;
+DELIMITER //
+CREATE PROCEDURE p_alterZipcodeDoctor (IN codigoPostal VARCHAR(10), id INT(11))
+BEGIN
+UPDATE doctor
+SET idZipcode = codigoPostal
+where idDoctor = id;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE p_alterExpertiseDoctor (IN esp INT(11), id INT(11))
+BEGIN
+UPDATE doctor
+SET idExpertise = esp
+where idDoctor = id;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE p_alterarCellphoneDoctor (IN cell VARCHAR(12), id INT(11))
+BEGIN
+UPDATE doctor
+SET cellphone = cell
+where idDoctor = id;
+END //
+DELIMITER ;
 
