@@ -21,27 +21,17 @@ END //
 DELIMITER ;
 
 
-#drop procedure p_alterarHorarioConsulta;
+drop procedure p_alterarHorarioConsulta;
 DELIMITER //
-CREATE PROCEDURE p_alterarHorarioConsulta (IN dateAppointment Datetime, original Datetime, idD INT(11), idA INT(11))
+CREATE PROCEDURE p_alterarHorarioConsulta (IN newDate Datetime, original Datetime, idD INT(11), idA INT(11))
 BEGIN
-DECLARE obs TEXT;
-DECLARE p decimal(7,2);
-DECLARE f TINYINT(4);
-select observations INTO obs from appointment where idDoctor = idD and idAthlete = idA and dateAppointment = original;
-select price INTO p from appointment where idDoctor = idD and idAthlete = idA and dateAppointment = original;
-select finished INTO f from appointment where idDoctor = idD and idAthlete = idA and dateAppointment = original;
-INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
-VALUES (idDoctor, idAthlete, obs, p, dateAppointment, f);
-call p_eliminarConsulta(idD, idA, original);
+if (f_diasAteConsulta(original)>0 
+	and f_diasAteConsulta(newDate)>0 
+    and (select finished from appointment) =0) THEN
+		update appointment a set a.dateAppointment = newDate where a.dateAppointment = original and a.idDoctor = idD and idAthlete=idA;
+END IF;
 END //
 DELIMITER ;
-
-
-
-
-
-
 
 
 #drop procedure p_listarConsultasEntreDatas;
@@ -276,8 +266,6 @@ order by (count(*)) desc;
 END //
 DELIMITER ;
 
-
-#ainda falta testar esta
 DELIMITER //
 CREATE PROCEDURE p_totalFaturado ()
 BEGIN
@@ -287,7 +275,6 @@ where finished = 1;
 END //
 DELIMITER ;
 
-#ainda falta testar esta
 DELIMITER //
 CREATE PROCEDURE p_consultasPassadas ()
 BEGIN
