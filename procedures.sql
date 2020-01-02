@@ -21,7 +21,7 @@ END //
 DELIMITER ;
 
 
-drop procedure p_alterarHorarioConsulta;
+#drop procedure p_alterarHorarioConsulta;
 DELIMITER //
 CREATE PROCEDURE p_alterarHorarioConsulta (IN newDate Datetime, original Datetime, idD INT(11), idA INT(11))
 BEGIN

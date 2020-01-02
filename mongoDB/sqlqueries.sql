@@ -129,3 +129,4 @@ where appointment.dateAppointment>=""
 and appointment.dateAppointment <= ""
 group by modality.idModality
 order by count(modality.nameModality) DESC limit 1;
+
