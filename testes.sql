@@ -34,10 +34,26 @@ call p_clubMoreAppointments();
 call p_athleteMoreAppointments();
 call p_moreAppointmentsDoctor();
 call p_alterWeightAthlete(95.3, 12249709);
-call p_alterDateAppointment('2019-02-09 19:00:00','2015-02-09 19:00:00',13712728,12249709);
+call p_alterDateAppointment('2021-12-04 10:00:00',"2021-12-04 10:30:00",18586488,10394391);
+call p_alterStateAppointment("2021-12-04 10:30:00", 18586488, 10394391);
+#^^não está a dar bem
+call p_scheduleAppointmentsAthlete(10394391);
+call p_appointmentsCompletedAthlete(10394391);
+call p_appointmentsCompletedDoctor(18586488);
+call p_scheduleAppointmentsDoctor(18586488);
+call p_scheduledAppointmentsAfterDate("2000-03-02");
+call p_addObservations("2021-12-04 10:30:00", 18586488, 10394391,"Nada a declarar");
+#^^não está a dar bem
+call p_alterZipcodeAthlete("1302-893",10394391); 
+call p_alterZipcodeDoctor("1302-893",18586488);
+call p_alterExpertiseDoctor(3,18586488);
+call p_alterarCellphoneDoctor(911111111,18586488);
+call p_appointmentsByDoctor();
+call p_doctorsByExpertise();
 
-select * from appointment a
-where a.idAthlete = 12249709 and a.idDoctor = 13712728;
+select * from zipcode;
+select * from athlete;
+select * from doctor where idDoctor= 18586488; #and a.idDoctor = 13712728;
 
 select * from athlete where idAthlete = 12249709;
 

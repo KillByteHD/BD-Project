@@ -1,15 +1,16 @@
-#drop function f_lucroEntreDatas;
-#drop function f_especialidadeEntreDatas;
-#drop function f_clubeEntreDatas;
-#drop function f_atletaEntreDatas;
-#drop function f_doctorEntreDatas;
-#drop function f_categoryEntreDatas;
-#drop function f_modalityEntreDatas;
-#drop function f_lucroDoctorEntreDatas;
-#drop function f_lucroAtleta;
-#drop function f_diasAteConsulta;
+/*
+drop function f_profitBetweenDates;
+drop function f_moreAppointmentsExpertiseBetweenDates;
+drop function f_moreAppointmentsClubBetweenDates;
+drop function f_moreAppointmentsAthleteBetweenDates;
+drop function f_moreAppointmentsDoctorBetweenDates;
+drop function f_moreAppointmentsCategoryBetweenDates;
+drop function f_moreAppointmentsModalityBetweenDates;
+drop function f_profitFromDoctorBetweenDates;
+drop function f_profitFromAthlete;
+drop function f_daysTillAppointment;
 
-
+*/
 DELIMITER $$
 CREATE FUNCTION f_profitBetweenDates(
     date1 Datetime,
@@ -187,10 +188,10 @@ END $$
 DELIMITER $$
 CREATE FUNCTION f_daysTillAppointment(
     dateAppoint Datetime
-) RETURNS int
+) RETURNS int(11)
 deterministic 
 BEGIN
-Declare res int;
+Declare res int(11);
 DECLARE dateNow datetime;
 select current_timestamp INTO dateNow;
 if(DATEDIFF(dateAppoint,dateNow)<0)
