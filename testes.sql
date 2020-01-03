@@ -34,7 +34,10 @@ call p_clubMoreAppointments();
 call p_athleteMoreAppointments();
 call p_moreAppointmentsDoctor();
 call p_alterWeightAthlete(95.3, 12249709);
-call p_alterDateAppointment('2021-12-04 10:00:00',"2021-12-14 10:00:00",18828978,10394391);
+#Exemplo de querer alterar uma data terminada para o futuro
+call p_alterDateAppointment('2021-12-04 10:00:00',"2018-06-21 15:00:00",18828978,12328604);
+#Exemplo de querer alterar uma data por realizar para o passado
+call p_alterDateAppointment('1800-12-04 10:00:00',"2021-12-14 10:00:00",18828978,10394391);
 call p_alterStateAppointment("2021-12-04 10:00:00", 18586488, 10394391);
 call p_scheduleAppointmentsAthlete(10394391);
 call p_appointmentsCompletedAthlete(10394391);
