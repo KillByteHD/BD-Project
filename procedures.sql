@@ -55,8 +55,8 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE p_alterDateAppointment (IN newDate Datetime, original Datetime, idD INT(11), idA INT(11))
 BEGIN
-if (f_diasAteConsulta(original)>0 
-	and f_diasAteConsulta(newDate)>0 
+if (f_daysTillAppointment(original)>0 
+	and f_daysTillAppointment(newDate)>0 
     and (select finished from appointment) =0) THEN
 		update appointment a set a.dateAppointment = newDate where a.dateAppointment = original and a.idDoctor = idD and idAthlete=idA;
 END IF;
