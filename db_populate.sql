@@ -1,3 +1,4 @@
+USE umclinic;
 /* Inserir os Clubes na tabela "club" */
 INSERT INTO club (idClub, nameClub)
 VALUES
