@@ -52,16 +52,31 @@ call p_doctorsByExpertise();
 select * from zipcode;
 select * from athlete;
 select * from appointment where idDoctor= 18586488 and idAthlete = 10394391 and dateAppointment = "2021-12-04 10:00:00";
-select * from doctor;
+select * from appointment where idDoctor =18828978;
 select * from athlete where idAthlete = 10394391;
 
-#14585939
+#Exemplo de querer adicionar uma consulta quando um atleta já tem consulta a essa hora
 INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
 VALUES (18828978, 10394391, 'Nada a declarar.', 403.1, '2021-12-04 10:00:00', 0);
 
-delete from appointment where idDoctor = 13712728 and idAthlete=14585939 and dateAppointment= '2001-04-28 11:30:04';
-#23738706
+#Exemplo de querer adicionar uma consulta quando um medico já tem consulta a essa hora
 INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
-VALUES (23738706, 12249709, 'Nada a declarar.', 403.1, '2001-05-10 16:00:00', 0);
+VALUES (18828978, 10394391, 'Nada a declarar.', 403.1, '2022-01-02 19:00:00', 0);
+
+#Exemplo de querer adicionar uma consulta quando a hora é errada aos segundos
+INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
+VALUES (18828978, 10394391, 'Nada a declarar.', 403.1, '2022-01-02 19:00:20', 0);
+
+#Exemplo de querer adicionar uma consulta quando a hora é errada aos minutos
+INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
+VALUES (18828978, 10394391, 'Nada a declarar.', 403.1, '2022-01-02 19:12:00', 0);
+
+#Exemplo de querer adicionar uma consulta que ira acontecer no futuro já terminada
+INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
+VALUES (18828978, 10394391, 'Nada a declarar.', 403.1, '2030-01-02 19:00:00', 1);
+
+#Exemplo de querer adicionar uma consulta que ira acontecer no passado sem estar terminada
+INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
+VALUES (18828978, 10394391, 'Nada a declarar.', 403.1, '1800-01-02 19:00:00', 0);
 
 #ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
