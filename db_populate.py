@@ -18,7 +18,6 @@ if platform.system() == "Windows":
 current_year = datetime.now().year
 current_month = datetime.now().month
 current_day = datetime.now().day
-print(datetime.now())
 random.seed()
 ids_athlete = []
 ids_doctor = []
