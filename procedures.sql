@@ -67,11 +67,14 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE p_alterStateAppointment (IN d Datetime, idD INT(11), idA INT(11))
 BEGIN
-UPDATE appointment
-SET finished = 1
-where idAthlete = idA
-and idDoctor = idD
-and dateAppointment = d;
+IF (d<curdate()) THEN
+	UPDATE appointment
+	SET finished = 1
+	where idAthlete = idA
+	and idDoctor = idD
+	and dateAppointment = d;
+ELSE SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Impossible!';
+END IF;
 END //
 DELIMITER ;
 

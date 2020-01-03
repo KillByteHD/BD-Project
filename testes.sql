@@ -34,16 +34,14 @@ call p_clubMoreAppointments();
 call p_athleteMoreAppointments();
 call p_moreAppointmentsDoctor();
 call p_alterWeightAthlete(95.3, 12249709);
-call p_alterDateAppointment('2021-12-04 10:00:00',"2021-12-04 10:30:00",18586488,10394391);
-call p_alterStateAppointment("2021-12-04 10:30:00", 18586488, 10394391);
-#^^não está a dar bem
+call p_alterDateAppointment('2021-12-04 10:00:00',"2021-12-14 10:00:00",18828978,10394391);
+call p_alterStateAppointment("2021-12-04 10:00:00", 18586488, 10394391);
 call p_scheduleAppointmentsAthlete(10394391);
 call p_appointmentsCompletedAthlete(10394391);
 call p_appointmentsCompletedDoctor(18586488);
 call p_scheduleAppointmentsDoctor(18586488);
 call p_scheduledAppointmentsAfterDate("2000-03-02");
-call p_addObservations("2021-12-04 10:30:00", 18586488, 10394391,"Nada a declarar");
-#^^não está a dar bem
+call p_addObservations("2021-12-04 10:00:00", 18586488, 10394391,"Nada a declarar");
 call p_alterZipcodeAthlete("1302-893",10394391); 
 call p_alterZipcodeDoctor("1302-893",18586488);
 call p_alterExpertiseDoctor(3,18586488);
@@ -53,13 +51,13 @@ call p_doctorsByExpertise();
 
 select * from zipcode;
 select * from athlete;
-select * from doctor where idDoctor= 18586488; #and a.idDoctor = 13712728;
-
-select * from athlete where idAthlete = 12249709;
+select * from appointment where idDoctor= 18586488 and idAthlete = 10394391 and dateAppointment = "2021-12-04 10:00:00";
+select * from doctor;
+select * from athlete where idAthlete = 10394391;
 
 #14585939
 INSERT INTO appointment (idDoctor, idAthlete, observations, price, dateAppointment, finished)
-VALUES (13712728, 14585939, 'Nada a declarar.', 403.1, '2001-05-10 16:00:00', 0);
+VALUES (18828978, 10394391, 'Nada a declarar.', 403.1, '2021-12-04 10:00:00', 0);
 
 delete from appointment where idDoctor = 13712728 and idAthlete=14585939 and dateAppointment= '2001-04-28 11:30:04';
 #23738706
