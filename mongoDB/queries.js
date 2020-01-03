@@ -1,27 +1,146 @@
-db.appointment.find({}).sort({idAthlete : 1});
+//p_completedAppointments
+db.appointment.find({finished: 1},{"athlete.nameAthlete": 1, "doctor.nameDoctor" : 1,dateAppointment:1,observations:1,price:1});
 
-//p_consultasPassadas
-db.appointment.find({finished: 1});
-db.appointment.find({idAthlete : 12249709});
-db.athlete.find({idAthlete : 12249709});
-
-//p_listarMarcadasEntreDatas
-db.appointment.find({ 
+//p_scheduledAppointmentsBetweenDates
+db.appointment.find({
      finished: 0,
-     dateAppointment: {$gte: ISODate("1994-10-10T21:30:00.000Z")}
-});
+     dateAppointment: {$gte: "1600-03-27 22:15:39", $lte: "2800-03-27 22:15:39" }
+     }, {"athlete.nameAthlete": 1, "doctor.nameDoctor" : 1,dateAppointment:1,observations:1,price:1});
 
-//p_listarMarcadasEntreDatas
+//p_alterDateAppointment
+db.appointment.update(
+    {
+        "athlete.idAthlete":12328604,
+        "doctor.idDoctor":18828978,
+        dateAppointment: "2018-06-21 15:00:00"
+    }, {
+        $set:{dateAppointment: "2029-12-04 10:00:00"}
+    }
+);
+
+//p_alterStateAppointment
+db.appointment.update(
+    {
+        "athlete.idAthlete":10394391,
+        "doctor.idDoctor":18586488,
+        dateAppointment: "2015-02-09 19:00:00"
+    }, {
+        $set:{finished: 1}
+    }
+);
+
+//p_completedAppointmentsFromDate
 db.appointment.find({ 
      finished: 1,
-     dateAppointment: {$lte: ISODate("1994-10-10T21:30:00.000Z")}
-});
+     dateAppointment: {$lte: "2019-03-27 22:15:39"}
+},{"athlete.nameAthlete": 1, "doctor.nameDoctor" : 1,dateAppointment:1,observations:1,price:1});
 
-//p_listarConsultasEntreDatas
+//p_scheduleAppointmentsAthlete
 db.appointment.find({
-    dateAppointment: {$gte: ISODate("1994-10-10T21:30:00.000Z"), $lte: ISODate("2000-10-10T21:30:00.000Z") }});
+     finished: 0,
+     "athlete.idAthlete": 10394391
+},{"athlete.nameAthlete": 1, "doctor.nameDoctor" : 1,dateAppointment:1,observations:1,price:1,finished:1});
 
-//p_totalFaturado
+//p_appointmentsCompletedAthlete
+db.appointment.find({ 
+     finished: 1,
+     "athlete.idAthlete": 10394391
+},{"athlete.nameAthlete": 1, "doctor.nameDoctor" : 1,dateAppointment:1,observations:1,price:1,finished:1});
+
+//p_appointmentsCompletedDoctor
+db.appointment.find({ 
+     finished: 1,
+     "doctor.idDoctor": 18586488
+},{"athlete.nameAthlete": 1, "doctor.nameDoctor" : 1,dateAppointment:1,observations:1,price:1,finished:1});
+
+//p_scheduleAppointmentsDoctor
+db.appointment.find({ 
+     finished: 0,
+     "doctor.idDoctor":18586488
+},{"athlete.nameAthlete": 1, "doctor.nameDoctor" : 1,dateAppointment:1,observations:1,price:1,finished:1});
+
+//p_scheduledAppointmentsAfterDate
+db.appointment.find({ 
+     finished: 0,
+     dateAppointment: {$gte: "2000-03-02"}
+},{"athlete.nameAthlete": 1, "doctor.nameDoctor" : 1,dateAppointment:1,observations:1,price:1});
+
+
+//p_alterWeightAthlete
+db.athlete.updateOne(
+    {
+        idAthlete:10394391
+    }, {
+        $set:{weight:119.9}
+    }
+);
+
+//p_addObservations
+db.appointment.update(
+    {
+        "athlete.idAthlete":10394391,
+        "doctor.idDoctor":18586488,
+        dateAppointment: "2021-12-04 10:30:00"
+    }, {
+        $set:{observations: "Nada a declarar."}
+    }
+);
+
+//p_doctorsNotAthleteCity NAO DA
+db.appointment.find({ 
+     athlete: {zipcode: {city: "Lisboa"}}
+},{"doctor.nameDoctor" : 1});
+
+//p_alterZipcodeAthlete
+db.athlete.updateOne(
+    {
+        idAthlete:10394391,
+    }, {
+        $set:{"zipcode.zipcode":"1302-893",
+              "zipcode.city":"Coimbra"}
+    }
+);
+
+//p_athletesOneExpertise
+//p_expertiseMoreAppointments
+//p_categoryMoreAppointments
+//p_modalityMoreAppointments
+//p_clubMoreAppointments
+//p_athleteMoreAppointments
+//p_moreAppointmentsDoctor
+//p_appointmentsByDoctor
+
+//p_AverageWeight
+db.athlete.aggregate([
+    {
+     $match: {
+     }
+    }, {
+        $group: {
+            _id: null,
+            peso_medio: {
+                $avg: "$weight"
+            }
+        }
+    }
+]);
+//p_doctorsByExpertise MAO DA
+db.doctor.aggregate([
+    {
+     $match: { 
+        
+     }
+    }, {
+        $group: {
+            _id: null,
+            total: {
+                $count: 
+            }
+        }
+    }
+]);
+
+//p_totalProfit
 db.appointment.aggregate([
     {
      $match: {
@@ -36,13 +155,44 @@ db.appointment.aggregate([
         }
     }
 ]);
+//p_alterZipcodeDoctor
+db.doctor.updateOne(
+    {
+        idDoctor:18586488,
+    }, {
+        $set:{"zipcode.zipcode":"1302-893",
+              "zipcode.city":"Coimbra" }
+    }
+);
 
-//f_lucroEntreDatas
+//p_alterExpertiseDoctor
+db.doctor.updateOne(
+    {
+        idDoctor:18586488,
+    }, {
+        $set:{"expertise.idExpertise":3,
+              "expertise.designation":"Cardiologia" }
+    }
+);
+db.doctor.find({idDoctor:18586488});
+//p_alterarCellphoneDoctor 
+db.doctor.updateOne(
+    {
+        idDoctor:18586488,
+    }, {
+        $set:{cellphone:912571644}
+    }
+);
+
+//f_profitBetweenDates
 db.appointment.aggregate([
     {
      $match: {
         finished: 1,
-        dateAppointment: {$gte: ISODate("2004-03-27T22:15:39.000Z"), $lte: ISODate("2010-03-27T22:15:39.000Z")}
+        dateAppointment: {
+            $gte: "2017-03-27 22:15:39", 
+            $lte: "2019-03-27 22:15:39"
+        }
      }
     }, {
         $group: {
@@ -54,13 +204,22 @@ db.appointment.aggregate([
     }
 ]);
 
-//f_lucroDoctorEntreDatas
+//f_moreAppointmentsExpertiseBetweenDates
+//f_moreAppointmentsClubBetweenDates
+//f_moreAppointmentsAthleteBetweenDates
+//f_moreAppointmentsDoctorBetweenDates
+//f_moreAppointmentsCategoryBetweenDates
+//f_moreAppointmentsModalityBetweenDates
+//f_profitFromDoctorBetweenDates
 db.appointment.aggregate([
     {
      $match: {
-        idDoctor: 13712728,
         finished: 1,
-        dateAppointment: {$gte: ISODate("1600-03-27T22:15:39.000Z"), $lte: ISODate("2800-03-27T22:15:39.000Z")}
+        "doctor.idDoctor": 18586488,
+        dateAppointment: {
+            $gte: "1600-03-27 22:15:39", 
+            $lte: "2800-03-27 22:15:39"
+        }
      }
     }, {
         $group: {
@@ -72,12 +231,12 @@ db.appointment.aggregate([
     }
 ]);
 
-//f_lucroAtleta
+//f_profitFromAthlete
 db.appointment.aggregate([
     {
      $match: {
-        idAthlete: 10229165,
         finished: 1,
+        "athlete.idAthlete":10394391
      }
     }, {
         $group: {
@@ -89,1098 +248,3 @@ db.appointment.aggregate([
     }
 ]);
 
-//p_mediaPeso
-db.athlete.aggregate([
-    {
-     $match: {
-     }
-    }, {
-        $group: {
-            _id: null,
-            peso_medio: {
-                $avg: "$weight"
-            }
-        }
-    }
-]);
-
-
-//p_alterarPesoAtleta
-db.athlete.updateOne(
-    {
-        idAthlete:12249709,
-    }, {
-        $set:{weight:95.3}
-    }
-);
-
-//p_addObservations
-db.appointment.update(
-    {
-        idAthlete:12249709,
-        idDoctor:13712728,
-        dateAppointment: ISODate("2015-02-09T19:00:00.000Z")
-    }, {
-        $set:{observations: "Nada a declarar."}
-    }
-);
-
-db.appointment.find({dateAppointment: ISODate("2019-11-18T16:30:00.000Z")});
-
-//p_adicionarConsulta
-db.appointment.insert(
-    {idDoctor:13712728, idAthlete:12249709,observations: "Nada", price: 0.0, dateAppointment:ISODate("2019-11-18T16:30:00.000Z"),finished:0}
-);
-
-//p_eliminarConsulta
-db.appointment.findOneAndDelete(
-    {idDoctor:13712728, idAthlete:12249709, dateAppointment:ISODate("2019-11-18T16:30:00.000Z")}
-);
-
-//p_finalizarConsulta
-db.appointment.update(
-    {
-        idAthlete:12249709,
-        idDoctor:13712728,
-        dateAppointment: ISODate("2015-02-09T19:00:00.000Z")
-    }, {
-        $set:{finished: 1}
-    }
-);
-
-db.appointment.find({dateAppointment: ISODate("2015-02-09T19:00:00.000Z")});
-
-//p_medicosNaoConsultaAtletasCidade
-db.appointment.aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idDoctor", 
-                "from" : "doctor", 
-                "foreignField" : "idDoctor", 
-                "as" : "doctor"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$doctor", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idAthlete", 
-                "from" : "athlete", 
-                "foreignField" : "idAthlete", 
-                "as" : "athlete"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$athlete", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "athlete.idZipcode", 
-                "from" : "zipcode", 
-                "foreignField" : "zipcode", 
-                "as" : "zipcode"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$zipcode", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$match" : {
-                "zipcode.city" : {
-                    "$not" : {
-                        "$in" : [
-                            "Lisboa"
-                        ]
-                    }
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "doctor.nameDoctor" : "$doctor.nameDoctor", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : null, 
-                "distinct" : {
-                    "$addToSet" : "$$ROOT"
-                }
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$distinct", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$replaceRoot" : {
-                "newRoot" : "$distinct"
-            }
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//p_especialidadeComMaisConsultas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idDoctor", 
-                "from" : "doctor", 
-                "foreignField" : "idDoctor", 
-                "as" : "doctor"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$doctor", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "doctor.idExpertise", 
-                "from" : "expertise", 
-                "foreignField" : "idExpertise", 
-                "as" : "expertise"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$expertise", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "expertise᎐idExpertise" : "$expertise.idExpertise"
-                }, 
-                "COUNT(*)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "expertise.idExpertise" : "$_id.expertise᎐idExpertise", 
-                "COUNT(*)" : "$COUNT(*)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(*)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(5)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-
-//p_categoriasComMaisConsultas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idAthlete", 
-                "from" : "athlete", 
-                "foreignField" : "idAthlete", 
-                "as" : "athlete"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$athlete", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "athlete.idCategory", 
-                "from" : "category", 
-                "foreignField" : "idCategory", 
-                "as" : "category"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$category", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "category᎐idCategory" : "$category.idCategory"
-                }, 
-                "COUNT(*)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "category.idCategory" : "$_id.category᎐idCategory", 
-                "COUNT(*)" : "$COUNT(*)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(*)" : NumberInt(-1)
-            }
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//p_modalidadesComMaisConsultas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idAthlete", 
-                "from" : "athlete", 
-                "foreignField" : "idAthlete", 
-                "as" : "athlete"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$athlete", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "athlete.idModality", 
-                "from" : "modality", 
-                "foreignField" : "idModality", 
-                "as" : "modality"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$modality", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "modality᎐idModality" : "$modality.idModality"
-                }, 
-                "COUNT(*)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "modality.idModality" : "$_id.modality᎐idModality", 
-                "COUNT(*)" : "$COUNT(*)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(*)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(5)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//p_clubesComMaisConsultas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idAthlete", 
-                "from" : "athlete", 
-                "foreignField" : "idAthlete", 
-                "as" : "athlete"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$athlete", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "athlete.idClub", 
-                "from" : "club", 
-                "foreignField" : "idClub", 
-                "as" : "club"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$club", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "club᎐idClub" : "$club.idClub"
-                }, 
-                "COUNT(*)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "club.idClub" : "$_id.club᎐idClub", 
-                "COUNT(*)" : "$COUNT(*)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(*)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(5)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//p_atletasComMaisConsultas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idAthlete", 
-                "from" : "athlete", 
-                "foreignField" : "idAthlete", 
-                "as" : "athlete"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$athlete", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "athlete᎐idAthlete" : "$athlete.idAthlete"
-                }, 
-                "COUNT(*)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "athlete.idAthlete" : "$_id.athlete᎐idAthlete", 
-                "COUNT(*)" : "$COUNT(*)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(*)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(5)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//p_medicoComMaisConsultas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idDoctor", 
-                "from" : "doctor", 
-                "foreignField" : "idDoctor", 
-                "as" : "doctor"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$doctor", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "doctor᎐idDoctor" : "$doctor.idDoctor"
-                }, 
-                "COUNT(*)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "doctor.idDoctor" : "$_id.doctor᎐idDoctor", 
-                "COUNT(*)" : "$COUNT(*)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(*)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(1)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//p_consultasPorMedico
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idDoctor", 
-                "from" : "doctor", 
-                "foreignField" : "idDoctor", 
-                "as" : "doctor"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$doctor", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "doctor᎐idDoctor" : "$doctor.idDoctor"
-                }, 
-                "COUNT(*)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "doctor.idDoctor" : "$_id.doctor᎐idDoctor", 
-                "COUNT(*)" : "$COUNT(*)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(*)" : NumberInt(-1)
-            }
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//f_especialidadeEntreDatas
-db.getCollection("expertise").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "expertise" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "expertise.idExpertise", 
-                "from" : "doctor", 
-                "foreignField" : "idExpertise", 
-                "as" : "doctor"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$doctor", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "doctor.idDoctor", 
-                "from" : "appointment", 
-                "foreignField" : "idDoctor", 
-                "as" : "appointment"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$appointment", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$match" : {
-                "$and" : [
-                    {
-                        "appointment.dateAppointment" : {
-                            "$gte" : ISODate("1600-03-27T22:15:39.000Z")
-                        }
-                    }, 
-                    {
-                        "appointment.dateAppointment" : {
-                            "$lte" : ISODate("2800-03-27T22:15:39.000Z")
-                        }
-                    }
-                ]
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "expertise᎐idExpertise" : "$expertise.idExpertise"
-                }, 
-                "COUNT(expertise᎐idExpertise)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "expertise.idExpertise" : "$_id.expertise᎐idExpertise", 
-                "COUNT(expertise.idExpertise)" : "$COUNT(expertise᎐idExpertise)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(expertise.idExpertise)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "expertise.idExpertise" : "$expertise.idExpertise"
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(1)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//f_clubeEntreDatas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idAthlete", 
-                "from" : "athlete", 
-                "foreignField" : "idAthlete", 
-                "as" : "athlete"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$athlete", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "athlete.idClub", 
-                "from" : "club", 
-                "foreignField" : "idClub", 
-                "as" : "club"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$club", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$match" : {
-                "$and" : [
-                    {
-                        "appointment.dateAppointment" : {
-                            "$gte" : ISODate("1600-03-27T22:15:39.000Z")
-                        }
-                    }, 
-                    {
-                        "appointment.dateAppointment" : {
-                            "$lte" : ISODate("2800-03-27T22:15:39.000Z")
-                        }
-                    }
-                ]
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "club᎐idClub" : "$club.idClub"
-                }, 
-                "COUNT(club᎐nameClub)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "club.idClub" : "$_id.club᎐idClub", 
-                "COUNT(club.nameClub)" : "$COUNT(club᎐nameClub)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(club.nameClub)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "club.idClub" : "$club.idClub"
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(1)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//f_atletaEntreDatas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idAthlete", 
-                "from" : "athlete", 
-                "foreignField" : "idAthlete", 
-                "as" : "athlete"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$athlete", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$match" : {
-                "$and" : [
-                    {
-                        "appointment.dateAppointment" : {
-                            "$gte" : ISODate("1600-03-27T22:15:39.000Z")
-                        }
-                    }, 
-                    {
-                        "appointment.dateAppointment" : {
-                            "$lte" : ISODate("2800-03-27T22:15:39.000Z")
-                        }
-                    }
-                ]
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "athlete᎐idAthlete" : "$athlete.idAthlete"
-                }, 
-                "COUNT(athlete᎐nameAthlete)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "athlete.idAthlete" : "$_id.athlete᎐idAthlete", 
-                "COUNT(athlete.nameAthlete)" : "$COUNT(athlete᎐nameAthlete)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(athlete.nameAthlete)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "athlete.idAthlete" : "$athlete.idAthlete"
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(1)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-
-//f_doctorEntreDatas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idDoctor", 
-                "from" : "doctor", 
-                "foreignField" : "idDoctor", 
-                "as" : "doctor"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$doctor", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$match" : {
-                "$and" : [
-                    {
-                        "appointment.dateAppointment" : {
-                            "$gte" : ISODate("1600-03-27T22:15:39.000Z")
-                        }
-                    }, 
-                    {
-                        "appointment.dateAppointment" : {
-                            "$lte" : ISODate("2800-03-27T22:15:39.000Z")
-                        }
-                    }
-                ]
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "doctor᎐idDoctor" : "$doctor.idDoctor"
-                }, 
-                "COUNT(doctor᎐nameDoctor)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "doctor.idDoctor" : "$_id.doctor᎐idDoctor", 
-                "COUNT(doctor.nameDoctor)" : "$COUNT(doctor᎐nameDoctor)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(doctor.nameDoctor)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "doctor.idDoctor" : "$doctor.idDoctor"
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(1)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//f_categoryEntreDatas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idAthlete", 
-                "from" : "athlete", 
-                "foreignField" : "idAthlete", 
-                "as" : "athlete"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$athlete", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "athlete.idCategory", 
-                "from" : "category", 
-                "foreignField" : "idCategory", 
-                "as" : "category"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$category", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$match" : {
-                "$and" : [
-                    {
-                        "appointment.dateAppointment" : {
-                            "$gte" : ISODate("1600-03-27T22:15:39.000Z")
-                        }
-                    }, 
-                    {
-                        "appointment.dateAppointment" : {
-                            "$lte" : ISODate("2800-03-27T22:15:39.000Z")
-                        }
-                    }
-                ]
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "category᎐idCategory" : "$category.idCategory"
-                }, 
-                "COUNT(category᎐nameCategory)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "category.idCategory" : "$_id.category᎐idCategory", 
-                "COUNT(category.nameCategory)" : "$COUNT(category᎐nameCategory)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(category.nameCategory)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "category.idCategory" : "$category.idCategory"
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(1)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
-
-//f_modalityEntreDatas
-db.getCollection("appointment").aggregate(
-    [
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "appointment" : "$$ROOT"
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "appointment.idAthlete", 
-                "from" : "athlete", 
-                "foreignField" : "idAthlete", 
-                "as" : "athlete"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$athlete", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$lookup" : {
-                "localField" : "athlete.idModality", 
-                "from" : "modality", 
-                "foreignField" : "idModality", 
-                "as" : "modality"
-            }
-        }, 
-        { 
-            "$unwind" : {
-                "path" : "$modality", 
-                "preserveNullAndEmptyArrays" : false
-            }
-        }, 
-        { 
-            "$match" : {
-                "$and" : [
-                    {
-                        "appointment.dateAppointment" : {
-                            "$gte" : ISODate("1600-03-27T22:15:39.000Z")
-                        }
-                    }, 
-                    {
-                        "appointment.dateAppointment" : {
-                            "$lte" : ISODate("2800-03-27T22:15:39.000Z")
-                        }
-                    }
-                ]
-            }
-        }, 
-        { 
-            "$group" : {
-                "_id" : {
-                    "modality᎐idModality" : "$modality.idModality"
-                }, 
-                "COUNT(modality᎐nameModality)" : {
-                    "$sum" : NumberInt(1)
-                }
-            }
-        }, 
-        { 
-            "$project" : {
-                "modality.idModality" : "$_id.modality᎐idModality", 
-                "COUNT(modality.nameModality)" : "$COUNT(modality᎐nameModality)", 
-                "_id" : NumberInt(0)
-            }
-        }, 
-        { 
-            "$sort" : {
-                "COUNT(modality.nameModality)" : NumberInt(-1)
-            }
-        }, 
-        { 
-            "$project" : {
-                "_id" : NumberInt(0), 
-                "modality.idModality" : "$modality.idModality"
-            }
-        }, 
-        { 
-            "$limit" : NumberInt(1)
-        }
-    ], 
-    { 
-        "allowDiskUse" : true
-    }
-);
