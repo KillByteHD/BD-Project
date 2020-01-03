@@ -1,3 +1,4 @@
+USE umclinic;
 /*
 drop function f_profitBetweenDates;
 drop function f_moreAppointmentsExpertiseBetweenDates;

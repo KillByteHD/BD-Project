@@ -1,3 +1,4 @@
+USE umclinic;
 #drop trigger confirmationAppointmentINS;
 #drop trigger confirmationAppointmentUP;
 

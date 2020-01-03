@@ -1,23 +1,14 @@
-DELETE from appointment;
-delete from doctor;
-delete from athlete;
-delete from category;
-delete from expertise;
-delete from club;
-delete from modality;
-delete from zipcode;
+USE umclinic;
 
-select * from v_especialidade;
-
-select f_profitBetweenDates("2004-03-27 22:15:39", "2010-03-27 22:15:39");
+select f_profitBetweenDates("2017-03-27 22:15:39", "2019-03-27 22:15:39");
 select f_moreAppointmentsExpertiseBetweenDates("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_moreAppointmentsClubBetweenDates("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_moreAppointmentsAthleteBetweenDates("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_moreAppointmentsDoctorBetweenDates("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_moreAppointmentsCategoryBetweenDates("1600-03-27 22:15:39", "2800-03-27 22:15:39");
 select f_moreAppointmentsModalityBetweenDates("1600-03-27 22:15:39", "2800-03-27 22:15:39");
-select f_profitFromDoctorBetweenDates(13712728, "1600-03-27 22:15:39", "2800-03-27 22:15:39");
-select f_profitFromAthlete(10229165);
+select f_profitFromDoctorBetweenDates(18586488, "1600-03-27 22:15:39", "2800-03-27 22:15:39");
+select f_profitFromAthlete(10394391);
 select f_daysTillAppointment("1800-03-26 22:15:39");
 
 call p_scheduledAppointmentsBetweenDates("1600-03-27 22:15:39", "2800-03-27 22:15:39");
@@ -52,7 +43,7 @@ call p_alterarCellphoneDoctor(911111111,18586488);
 call p_appointmentsByDoctor();
 call p_doctorsByExpertise();
 
-select * from zipcode;
+select * from expertise;
 select * from athlete;
 select * from appointment where idDoctor= 18586488 and idAthlete = 10394391 and dateAppointment = "2021-12-04 10:00:00";
 select * from appointment where idDoctor =18828978;
