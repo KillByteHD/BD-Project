@@ -1,16 +1,35 @@
 USE umclinic;
+/*
+drop procedure p_completedAppointments;
+drop procedure p_scheduledAppointmentsBetweenDates;
+drop procedure p_alterDateAppointment;
+drop procedure p_alterStateAppointment;
+drop procedure p_completedAppointmentsFromDate;
+drop procedure p_scheduleAppointmentsAthlete;
+drop procedure p_appointmentsCompletedAthlete;
+drop procedure p_appointmentsCompletedDoctor;
+drop procedure p_scheduleAppointmentsDoctor;
+drop procedure p_scheduledAppointmentsAfterDate;
+drop procedure p_alterWeightAthlete;
+drop procedure p_addObservations;
+drop procedure p_doctorsNotAthleteCity;
+drop procedure p_alterZipcodeAthlete; 
+drop procedure p_athletesOneExpertise; 
+drop procedure p_expertiseMoreAppointments;
+drop procedure p_categoryMoreAppointments;
+drop procedure p_modalityMoreAppointments;
+drop procedure p_clubMoreAppointments;
+drop procedure p_athleteMoreAppointments;
+drop procedure p_moreAppointmentsDoctor;
+drop procedure p_appointmentsByDoctor;
+drop procedure p_AverageWeight;
+drop procedure p_doctorsByExpertise;
+drop procedure p_totalProfit;
+drop procedure p_alterZipcodeDoctor;
+drop procedure p_alterExpertiseDoctor;
+drop procedure p_alterarCellphoneDoctor;
 
-#drop procedure p_adicionarConsulta;
-#drop procedure p_alterarHorarioConsulta;
-#drop procedure p_listarConsultasEntreDatas;
-#drop procedure p_listarRealizadasEntreDatas;
-#drop procedure p_listarConsultasAtleta;
-#drop procedure p_listarMarcadasEntreDatas;
-#drop procedure p_eliminarConsulta;
-#drop procedure p_alterarPesoAtleta;
-#drop procedure p_finalizarConsulta;
-#drop procedure p_addObservations;
-
+*/
 DELIMITER //
 CREATE PROCEDURE p_completedAppointments()
 BEGIN
@@ -21,7 +40,6 @@ where finished = 1;
 END //
 DELIMITER ;
 																    
-#drop procedure p_scheduledAppointmentsBetweenDates;
 DELIMITER //
 CREATE PROCEDURE p_scheduledAppointmentsBetweenDates (IN date1 Datetime, date2 Datetime)
 BEGIN
@@ -34,7 +52,6 @@ and finished = 0;
 END //
 DELIMITER ;
 
-#drop procedure p_alterDateAppointment;
 DELIMITER //
 CREATE PROCEDURE p_alterDateAppointment (IN newDate Datetime, original Datetime, idD INT(11), idA INT(11))
 BEGIN
@@ -46,7 +63,6 @@ END IF;
 END //
 DELIMITER ;
 
-#drop procedure p_alterStateAppointment;
 DELIMITER //
 CREATE PROCEDURE p_alterStateAppointment (IN d Datetime, idD INT(11), idA INT(11))
 BEGIN
@@ -57,10 +73,7 @@ and idDoctor = idD
 and dateAppointment = d;
 END //
 DELIMITER ;
-									      
 
-
-#drop procedure p_completedAppointmentsFromDate;
 DELIMITER //
 CREATE PROCEDURE p_completedAppointmentsFromDate (IN date1 Datetime)
 BEGIN
@@ -72,8 +85,6 @@ and a.finished = 1;
 END //
 DELIMITER ;
 									      
-
-
 
 DELIMITER //
 CREATE PROCEDURE p_scheduleAppointmentsAthlete (IN idA INT(11))
@@ -122,7 +133,6 @@ END //
 DELIMITER ;							    
 
 
-#drop procedure p_scheduledAppointmentsAfterDate;
 DELIMITER //
 CREATE PROCEDURE p_scheduledAppointmentsAfterDate (IN date1 Datetime)
 BEGIN
@@ -135,9 +145,6 @@ END //
 DELIMITER ;
 
 
-
-
-#drop procedure p_alterWeightAthlete;
 DELIMITER //
 CREATE PROCEDURE p_alterWeightAthlete (IN peso decimal(4,1), id INT(11))
 BEGIN
@@ -148,20 +155,6 @@ END //
 DELIMITER ;
 
 
-
-#drop procedure p_alterStateAppointment;
-DELIMITER //
-CREATE PROCEDURE p_alterStateAppointment (IN d Datetime, idD INT(11), idA INT(11))
-BEGIN
-UPDATE appointment
-SET finished = 1
-where idAthlete = idA
-and idDoctor = idD
-and dateAppointment = d;
-END //
-DELIMITER ;
-
-#drop procedure p_addObservations;
 DELIMITER //
 CREATE PROCEDURE p_addObservations (IN d Datetime, idD INT(11), idA INT(11), obs TEXT)
 BEGIN
@@ -185,7 +178,6 @@ where z.city not in (cityAthlete);
 END //
 DELIMITER ;
 
-drop procedure p_alterZipcodeAthlete;
 DELIMITER //
 CREATE PROCEDURE p_alterZipcodeAthlete (IN codigoPostal VARCHAR(10), id INT(11))
 BEGIN
@@ -327,21 +319,7 @@ from appointment a
 where finished = 1;
 END //
 DELIMITER ;
-		
-DELIMITER //
-CREATE PROCEDURE p_athletesOneExpertise ()
-BEGIN
-Select atl.nameAthlete as Name, e.designation as Expertise
-from appointment a 
-INNER JOIN athlete atl on atl.idAthlete= a.idAthlete
-INNER JOIN doctor d on  d.idDoctor = a.idDoctor
-INNER JOIN expertise e on d.idExpertise = e.idExpertise
-group by a.idAthlete
-having count(*) = 1;
-END //
-DELIMITER ;
-		
-drop procedure p_alterZipcodeDoctor;
+				
 DELIMITER //
 CREATE PROCEDURE p_alterZipcodeDoctor (IN codigoPostal VARCHAR(10), id INT(11))
 BEGIN
