@@ -44,7 +44,7 @@ call p_appointmentsByDoctor();
 call p_doctorsByExpertise();
 
 select * from expertise;
-select * from athlete;
+select * from doctor where idDoctor=18586488;
 select * from appointment where idDoctor= 18586488 and idAthlete = 10394391 and dateAppointment = "2021-12-04 10:00:00";
 select * from appointment where idDoctor =18828978;
 select * from athlete where idAthlete = 10394391;

@@ -1,3 +1,4 @@
+use umclinicB;
 //p_completedAppointments
 db.appointment.find({finished: 1},{"athlete.nameAthlete": 1, "doctor.nameDoctor" : 1,dateAppointment:1,observations:1,price:1});
 
@@ -86,9 +87,10 @@ db.appointment.update(
     }
 );
 
-//p_doctorsNotAthleteCity NAO DA
-db.appointment.find({ 
-     athlete: {zipcode: {city: "Lisboa"}}
+
+//p_doctorsNotAthleteCity
+db.appointment.find({
+         "athlete.zipcode.city" : {$ne: "Lisboa"}
 },{"doctor.nameDoctor" : 1});
 
 //p_alterZipcodeAthlete
@@ -100,15 +102,6 @@ db.athlete.updateOne(
               "zipcode.city":"Coimbra"}
     }
 );
-
-//p_athletesOneExpertise
-//p_expertiseMoreAppointments
-//p_categoryMoreAppointments
-//p_modalityMoreAppointments
-//p_clubMoreAppointments
-//p_athleteMoreAppointments
-//p_moreAppointmentsDoctor
-//p_appointmentsByDoctor
 
 //p_AverageWeight
 db.athlete.aggregate([
@@ -124,22 +117,6 @@ db.athlete.aggregate([
         }
     }
 ]);
-//p_doctorsByExpertise MAO DA
-db.doctor.aggregate([
-    {
-     $match: { 
-        
-     }
-    }, {
-        $group: {
-            _id: null,
-            total: {
-                $count: 
-            }
-        }
-    }
-]);
-
 //p_totalProfit
 db.appointment.aggregate([
     {
@@ -204,12 +181,6 @@ db.appointment.aggregate([
     }
 ]);
 
-//f_moreAppointmentsExpertiseBetweenDates
-//f_moreAppointmentsClubBetweenDates
-//f_moreAppointmentsAthleteBetweenDates
-//f_moreAppointmentsDoctorBetweenDates
-//f_moreAppointmentsCategoryBetweenDates
-//f_moreAppointmentsModalityBetweenDates
 //f_profitFromDoctorBetweenDates
 db.appointment.aggregate([
     {
