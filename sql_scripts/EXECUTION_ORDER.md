@@ -2,16 +2,16 @@
 
 Como sugestão de ordem de execução dos scripts de forma a gerar a base de dados corretamente
 
-* db_create.sql
+1. db_create.sql
 
-* db_populate.sql
+2. db_populate.sql
 
-> functions.sql
+3. functions.sql
 
-> procedures.sql
+4. procedures.sql
 
-> triggers.sql
+5. triggers.sql
 
-> users.sql
+6. users.sql
 
-> views.sql
+7. views.sql
