@@ -1,4 +1,4 @@
-{"idDoctor": 18586488, "birthdate": "1982-01-22", "nameDoctor": "Collin Guterres", "cellphone": "912571644", "zipcode": {"zipcode": "6022-528", "city": "Funchal"}, "expertise": {"idExpertise": 10, "designation": "Reumatologia"}}
+{"idDoctor": 18586488, "birthdate": "1982-01-22", "nameDoctor": "Collin Guterres", "cellphone": "912571644", "zipcode": {"zipcode": "1302-893", "city": "Coimbra"}, "expertise": {"idExpertise": 3, "designation": "Cardiologia"}}
 {"idDoctor": 18828978, "birthdate": "1975-03-19", "nameDoctor": "Boaventura Quintana", "cellphone": "915747480", "zipcode": {"zipcode": "3906-231", "city": "Londres"}, "expertise": {"idExpertise": 8, "designation": "Psiquiatria"}}
 {"idDoctor": 22599454, "birthdate": "1980-04-13", "nameDoctor": "Iberê Penteado", "cellphone": "918273721", "zipcode": {"zipcode": "5567-239", "city": "Moçambique"}, "expertise": {"idExpertise": 9, "designation": "Radiologia"}}
 {"idDoctor": 26106907, "birthdate": "1984-03-27", "nameDoctor": "Dora García", "cellphone": "912472498", "zipcode": {"zipcode": "8314-191", "city": "Praga"}, "expertise": {"idExpertise": 8, "designation": "Psiquiatria"}}
