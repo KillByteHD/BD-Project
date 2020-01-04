@@ -200,12 +200,3 @@ then return -1;
 else return DATEDIFF(dateAppoint,dateNow);
 END IF;
 END $$
-
-
-
-
-
-
-
-
-
